@@ -5,7 +5,8 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "eject": "expo eject"
+    "eject": "expo eject",
+    "svgr": "svgr ./app/assets/svg -d ./app/components/icons --native --icon --svg-props width=24,height=24,className="
   },
   "dependencies": {
     "@react-native-community/eslint-config": "^2.0.0",
@@ -24,10 +25,12 @@
     "react-native-reanimated": "~1.13.0",
     "react-native-safe-area-context": "3.1.4",
     "react-native-screens": "~2.10.1",
+    "react-native-svg": "^12.1.0",
     "react-native-web": "~0.13.12"
   },
   "devDependencies": {
-    "@babel/core": "~7.9.0"
+    "@babel/core": "~7.9.0",
+    "@svgr/cli": "^5.5.0"
   },
   "private": true
 }
