@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import * as Updates from 'expo-updates';
 import * as Font from 'expo-font';
@@ -14,10 +13,12 @@ export default function App() {
   }, []);
 
   const loadFonts = async () => {
-    let { isAvailable } = await Updates.checkForUpdateAsync();
-    if (isAvailable) {
-      await Updates.fetchUpdateAsync();
-      await Updates.reloadAsync();
+    if (!__DEV__) {
+      let { isAvailable } = await Updates.checkForUpdateAsync();
+      if (isAvailable) {
+        await Updates.fetchUpdateAsync();
+        await Updates.reloadAsync();
+      }
     }
 
     try {
