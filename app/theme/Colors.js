@@ -5,4 +5,6 @@ export default {
   verySoftBlue: '#97aaed',
   softCyan: '#60dcca',
   lightGrayishRed: '#FDF8F8',
+  moderateCyan: '#50c2c9',
+  darkCyan: '#2f9aa0',
 };
