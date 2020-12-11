@@ -5,9 +5,9 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from '../../../
 export default StyleSheet.create({
   circle: {
     position: 'absolute',
-    width: hp('23%'),
-    height: hp('23%'),
-    borderRadius: hp('23%') / 2,
+    width: hp('20%'),
+    height: hp('20%'),
+    borderRadius: hp('20%') / 2,
   },
 
   first: {
