@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Alert } from 'react-native';
 
 import styles from './styles/Styles';
 import Layout from '../../../components/layout/Layout';
@@ -12,6 +12,28 @@ const Register = ({ navigation }) => {
   const [email, setemail] = useState('');
   const [password, setpassword] = useState('');
   const [passwordConfrim, setpasswordConfrim] = useState('');
+  const [fetchingRegister, setfetchingRegister] = useState(false);
+
+  const registerValidation = () => {
+    setfetchingRegister(true);
+    let errorMessage;
+    if (!nameSurname || nameSurname.length < 4) errorMessage = 'Lütfen geçerli ad soyad giriniz';
+    else if (!email || email.length < 5 || !email.includes('@'))
+      errorMessage = 'Lütfen geçerli bir email adresi giriniz.';
+    else if (!password || password.length < 4) errorMessage = 'Lütfen şifrenizi doğru giriniz.';
+    else if (!passwordConfrim || passwordConfrim.length < 4 || password !== passwordConfrim)
+      errorMessage = 'Lütfen şifre doğrulamanızı doğru giriniz.';
+    return errorMessage
+      ? Alert.alert('Lütfen Dikkat!', errorMessage, [{ text: 'Tamam', onPress: () => setfetchingRegister(false) }], {
+          cancelable: false,
+        })
+      : register();
+  };
+
+  const register = () => {
+    console.log('regiter');
+    setfetchingRegister(false);
+  };
 
   return (
     <Layout>
@@ -66,7 +88,12 @@ const Register = ({ navigation }) => {
             />
           </View>
           <View style={styles.registerButton}>
-            <Button title={'Kayıt Ol'} onPressBtn={() => console.log('register')} />
+            <Button
+              title={'Kayıt Ol'}
+              onPressBtn={registerValidation}
+              fetching={fetchingRegister}
+              disabled={fetchingRegister}
+            />
           </View>
         </KeyboardAwareScrollView>
       </View>
