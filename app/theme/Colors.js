@@ -7,4 +7,5 @@ export default {
   lightGrayishRed: '#FDF8F8',
   moderateCyan: '#50c2c9',
   darkCyan: '#2f9aa0',
+  darkGray: '#8e8e8e',
 };

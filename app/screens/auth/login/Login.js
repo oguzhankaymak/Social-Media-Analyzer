@@ -9,7 +9,7 @@ import { SocialGirl } from '../../../components/icons';
 import Circles from '../../../components/circles/Circles';
 import Button from '../../../components/button/Button';
 
-const Login = () => {
+const Login = ({ navigation }) => {
   const [email, setemail] = useState('');
   const [password, setpassword] = useState('');
   return (
@@ -46,11 +46,11 @@ const Login = () => {
             <Button title={'Giriş Yap'} />
           </View>
         </KeyboardAwareScrollView>
-        <TouchableOpacity style={styles.footer}>
-          <Text style={styles.registerTextRegular}>Hesabınız yok mu ?</Text>
-          <Text style={styles.registerTextBold}> Kayıt Ol</Text>
-        </TouchableOpacity>
       </View>
+      <TouchableOpacity style={styles.footer} onPress={() => navigation.navigate('register')}>
+        <Text style={styles.loginTextRegular}>Hesabınız yok mu ?</Text>
+        <Text style={styles.loginTextBold}> Kayıt Ol</Text>
+      </TouchableOpacity>
     </Layout>
   );
 };
