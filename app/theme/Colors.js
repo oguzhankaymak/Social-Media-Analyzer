@@ -8,4 +8,6 @@ export default {
   moderateCyan: '#50c2c9',
   darkCyan: '#2f9aa0',
   darkGray: '#8e8e8e',
+  vividCyanLimeGreen: '#33FFB8',
+  vividPink: '#FF3374',
 };

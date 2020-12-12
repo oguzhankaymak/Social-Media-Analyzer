@@ -1,11 +1,9 @@
 import { StyleSheet } from 'react-native';
-import { Fonts } from '../../../theme';
-import Colors from '../../../theme/Colors';
+import { Fonts, Colors } from '../../../theme';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from '../../../utils/PercentageCalculator';
 
 export default StyleSheet.create({
   button: {
-    backgroundColor: Colors.moderateCyan,
     width: wp('87%'),
     height: hp('8%'),
     justifyContent: 'center',
