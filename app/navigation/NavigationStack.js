@@ -5,7 +5,7 @@ import AppNavigator from './AppStack';
 import AuthNavigator from './AuthStack';
 
 const NavigationStack = () => {
-  const user = null; //from redux
+  const user = 'user'; //from redux
 
   return <NavigationContainer>{user ? <AppNavigator /> : <AuthNavigator />}</NavigationContainer>;
 };
