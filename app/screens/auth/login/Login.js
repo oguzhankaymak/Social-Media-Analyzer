@@ -62,7 +62,12 @@ const Login = ({ navigation }) => {
             />
           </View>
           <View style={styles.loginButton}>
-            <Button title={'Giriş Yap'} onPressBtn={loginValidation} fetching={fetchingLogin} />
+            <Button
+              title={'Giriş Yap'}
+              onPressBtn={loginValidation}
+              fetching={fetchingLogin}
+              disabled={fetchingLogin}
+            />
           </View>
         </KeyboardAwareScrollView>
       </View>
