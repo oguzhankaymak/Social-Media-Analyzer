@@ -7,7 +7,7 @@ import register from '../screens/auth/register/Register';
 
 export default AuthNavigator = () => (
   <AuthStack.Navigator>
-    <AuthStack.Screen name="login" component={login} options={{ headerShown: false }} />
     <AuthStack.Screen name="register" component={register} options={{ headerShown: false }} />
+    <AuthStack.Screen name="login" component={login} options={{ headerShown: false }} />
   </AuthStack.Navigator>
 );

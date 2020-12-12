@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Alert } from 'react-native';
 
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
@@ -12,6 +12,25 @@ import Button from '../../../components/button/Button';
 const Login = ({ navigation }) => {
   const [email, setemail] = useState('');
   const [password, setpassword] = useState('');
+  const [fetchingLogin, setfetchingLogin] = useState(false);
+
+  const loginValidation = () => {
+    setfetchingLogin(true);
+    let errorMessage;
+    if (!email || email.length < 5 || !email.includes('@')) errorMessage = 'Lütfen geçerli bir email adresi giriniz.';
+    else if (!password || password.length < 4) errorMessage = 'Lütfen şifrenizi doğru giriniz.';
+    return errorMessage
+      ? Alert.alert('Lütfen Dikkat!', errorMessage, [{ text: 'Tamam', onPress: () => setfetchingLogin(false) }], {
+          cancelable: false,
+        })
+      : login();
+  };
+
+  const login = () => {
+    console.log('login');
+    setfetchingLogin(false);
+  };
+
   return (
     <Layout>
       <View style={styles.form}>
@@ -43,11 +62,16 @@ const Login = ({ navigation }) => {
             />
           </View>
           <View style={styles.loginButton}>
-            <Button title={'Giriş Yap'} />
+            <Button
+              title={'Giriş Yap'}
+              onPressBtn={loginValidation}
+              fetching={fetchingLogin}
+              disabled={fetchingLogin}
+            />
           </View>
         </KeyboardAwareScrollView>
       </View>
-      <TouchableOpacity style={styles.footer} onPress={() => navigation.navigate('register')}>
+      <TouchableOpacity style={styles.footer} onPress={() => navigation.goBack()}>
         <Text style={styles.loginTextRegular}>Hesabınız yok mu ?</Text>
         <Text style={styles.loginTextBold}> Kayıt Ol</Text>
       </TouchableOpacity>
