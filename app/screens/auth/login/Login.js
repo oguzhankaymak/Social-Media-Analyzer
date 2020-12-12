@@ -71,7 +71,7 @@ const Login = ({ navigation }) => {
           </View>
         </KeyboardAwareScrollView>
       </View>
-      <TouchableOpacity style={styles.footer} onPress={() => navigation.navigate('register')}>
+      <TouchableOpacity style={styles.footer} onPress={() => navigation.goBack()}>
         <Text style={styles.loginTextRegular}>Hesabınız yok mu ?</Text>
         <Text style={styles.loginTextBold}> Kayıt Ol</Text>
       </TouchableOpacity>

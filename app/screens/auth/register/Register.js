@@ -97,7 +97,7 @@ const Register = ({ navigation }) => {
           </View>
         </KeyboardAwareScrollView>
       </View>
-      <TouchableOpacity style={styles.footer} onPress={() => navigation.goBack()}>
+      <TouchableOpacity style={styles.footer} onPress={() => navigation.navigate('login')}>
         <Text style={styles.registerTextRegular}>Hesabınız var mı ?</Text>
         <Text style={styles.registerTextBold}> Giriş Yap</Text>
       </TouchableOpacity>
