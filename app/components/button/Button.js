@@ -4,9 +4,9 @@ import { View, Text, TouchableOpacity, ActivityIndicator } from 'react-native';
 import styles from './styles/Styles';
 import { GlobalStyles, Colors } from '../../theme';
 
-const Button = ({ title, fetching, onPressBtn }) => {
+const Button = ({ title, fetching, disabled, onPressBtn }) => {
   return (
-    <TouchableOpacity disabled={fetching} style={styles.button} onPress={onPressBtn}>
+    <TouchableOpacity disabled={disabled} style={styles.button} onPress={onPressBtn}>
       {fetching ? (
         <View style={GlobalStyles.center}>
           <ActivityIndicator size={'small'} color={Colors.white} />
