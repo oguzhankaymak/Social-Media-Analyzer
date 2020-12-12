@@ -41,7 +41,7 @@ export default StyleSheet.create({
   },
 
   form: {
-    flex: 1,
+    flex: 0.95,
     alignItems: 'center',
   },
 
@@ -50,18 +50,20 @@ export default StyleSheet.create({
   },
 
   footer: {
+    flex: 0.05,
     flexDirection: 'row',
-    height: hp('5.5%'),
+    alignItems: 'flex-start',
+    justifyContent: 'center',
   },
 
-  registerTextRegular: {
+  loginTextRegular: {
     fontFamily: Fonts.type.PoppinsRegular,
     fontSize: Fonts.size.h22,
     color: Colors.black,
     opacity: 0.79,
   },
 
-  registerTextBold: {
+  loginTextBold: {
     fontFamily: Fonts.type.PoppinsBold,
     fontSize: Fonts.size.h22,
     color: Colors.darkCyan,
