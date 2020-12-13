@@ -1,17 +1,17 @@
 import React from 'react';
-
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import HomeScreen from '../screens/bottomTab/01_home/Home';
-import AccountScreen from '../screens/bottomTab/03_account/Account';
-import { HomeIcon, UserIcon } from '../components/icons';
 
 const Tab = createBottomTabNavigator();
+
+import HomeNavigator from './HomeStack';
+import AccountScreen from '../screens/bottomTab/03_account/Account';
+import { HomeIcon, UserIcon } from '../components/icons';
 
 const AppBottomTabNavigator = () => (
   <Tab.Navigator>
     <Tab.Screen
-      name="home"
-      component={HomeScreen}
+      name="homeNavigator"
+      component={HomeNavigator}
       options={{
         tabBarLabel: 'Anasayfa',
         tabBarIcon: ({ color, size }) => <HomeIcon name="home" color={color} size={size} />,

@@ -4,7 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 const Stack = createStackNavigator();
 
-import AppNavigator from './AppStack';
+import AppBottomTabNavigator from './AppBottomTabNavigator';
 import AuthNavigator from './AuthStack';
 
 const NavigationStack = () => {
@@ -13,7 +13,7 @@ const NavigationStack = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator headerMode="none">
-        {user ? <Stack.Screen name="appNavigator" component={AppNavigator} /> : <AuthNavigator />}
+        {user ? <Stack.Screen name="appBottomTabNavigator" component={AppBottomTabNavigator} /> : <AuthNavigator />}
       </Stack.Navigator>
     </NavigationContainer>
   );
