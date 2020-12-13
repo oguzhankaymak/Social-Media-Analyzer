@@ -7,7 +7,7 @@ import { HomeIcon, UserIcon } from '../components/icons';
 
 const Tab = createBottomTabNavigator();
 
-export default AppBottomTabNavigator = () => (
+const AppBottomTabNavigator = () => (
   <Tab.Navigator>
     <Tab.Screen
       name="home"
@@ -27,3 +27,5 @@ export default AppBottomTabNavigator = () => (
     />
   </Tab.Navigator>
 );
+
+export default AppBottomTabNavigator;
