@@ -10,4 +10,9 @@ export default {
   darkGray: '#8e8e8e',
   vividCyanLimeGreen: '#33FFB8',
   vividPink: '#FF3374',
+  softLimeGreen: '#6CE060',
+  red: '#ff0000',
+  mediumSoftCyan: '#5CCDF1',
+  softOrange: '#EDB366',
+  moderateMagenta: '#D651D0',
 };
