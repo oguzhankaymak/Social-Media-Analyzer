@@ -5,7 +5,7 @@ import styles from './styles/Style';
 import { BoardListIcon, InstagramIcon, PieChartIcon, WriteIcon } from '../icons';
 import { Colors } from '../../theme';
 
-const RoundCard = ({ name, title }) => {
+const RoundCard = ({ name, title, onPressCard }) => {
   const _renderIcon = () => {
     if (name === 'instagram') {
       return <InstagramIcon color={textColor()} width={styles.icon.width} height={styles.icon.height} />;
@@ -34,7 +34,7 @@ const RoundCard = ({ name, title }) => {
     return 'white';
   };
   return (
-    <TouchableOpacity style={[styles.card, { backgroundColor: cardColor() }]}>
+    <TouchableOpacity style={[styles.card, { backgroundColor: cardColor() }]} onPress={onPressCard}>
       {_renderIcon()}
       <Text style={[styles.title, { color: textColor() }]}>{title}</Text>
     </TouchableOpacity>
