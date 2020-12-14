@@ -5,7 +5,7 @@ import Layout from '../../../components/layout/Layout';
 import RoundCard from '../../../components/roundCard/RoundCard';
 import styles from './styles/Styles';
 
-const Home = () => {
+const Home = ({ navigation }) => {
   return (
     <Layout>
       <View style={styles.header}>
@@ -28,7 +28,11 @@ const Home = () => {
               <RoundCard name={'charts'} title={'Grafiklerim'} />
             </View>
             <View style={styles.card}>
-              <RoundCard name={'contact'} title={'Bize Ulaşın'} />
+              <RoundCard
+                name={'contact'}
+                title={'Bize Ulaşın'}
+                onPressCard={() => navigation.navigate('operationStack')}
+              />
             </View>
           </View>
         </ScrollView>
