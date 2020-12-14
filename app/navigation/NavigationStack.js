@@ -13,7 +13,11 @@ const NavigationStack = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator headerMode="none">
-        {user ? <Stack.Screen name="appBottomTabNavigator" component={AppBottomTabNavigator} /> : <AuthNavigator />}
+        {user ? (
+          <Stack.Screen name="appBottomTabNavigator" component={AppBottomTabNavigator} />
+        ) : (
+          <Stack.Screen name="authNavigator" component={AuthNavigator} />
+        )}
       </Stack.Navigator>
     </NavigationContainer>
   );
