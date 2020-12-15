@@ -15,4 +15,5 @@ export default {
   mediumSoftCyan: '#5CCDF1',
   softOrange: '#EDB366',
   moderateMagenta: '#D651D0',
+  brightCyan: '#3EDED9',
 };

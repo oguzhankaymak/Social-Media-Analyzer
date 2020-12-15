@@ -22,6 +22,7 @@ const type = {
   PoppinsRegular: 'poppinsRegular',
   PoppinsSemiBold: 'poppinsSemiBold',
   PoppinsBold: 'poppinsBold',
+  PoppinsLight: 'poppinsLight',
 };
 
 export default {

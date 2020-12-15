@@ -1,4 +1,5 @@
 export { default as BoardListIcon } from './BoardListIcon';
+export { default as ChartSquareBarIcon } from './ChartSquareBarIcon';
 export { default as CloseIcon } from './CloseIcon';
 export { default as EditIcon } from './EditIcon';
 export { default as HomeIcon } from './HomeIcon';
