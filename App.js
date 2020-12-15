@@ -26,6 +26,7 @@ export default function App() {
         poppinsRegular: require('./app/assets/fonts/Poppins-Regular.ttf'),
         poppinsSemiBold: require('./app/assets/fonts/Poppins-SemiBold.ttf'),
         poppinsBold: require('./app/assets/fonts/Poppins-Bold.ttf'),
+        poppinsLight: require('./app/assets/fonts/Poppins-Light.ttf'),
       });
     } catch (error) {
       console.log('error on font load');
