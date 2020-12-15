@@ -11,7 +11,13 @@ export default StyleSheet.create({
   },
 
   container: {
-    flex: 0.6,
+    flex: 0.25,
+  },
+
+  footer: {
+    flex: 0.35,
+    justifyContent: 'flex-start',
+    alignItems: 'center',
   },
 
   cards: {
