@@ -26,13 +26,17 @@ const Home = ({ navigation }) => {
               <RoundCard name={'advice'} title={'Öneriler'} />
             </View>
             <View style={styles.card}>
-              <RoundCard name={'charts'} title={'Grafiklerim'} />
+              <RoundCard
+                name={'charts'}
+                title={'Grafiklerim'}
+                onPressCard={() => navigation.navigate('operationStack', { screen: 'myChartsStack' })}
+              />
             </View>
             <View style={styles.card}>
               <RoundCard
                 name={'contact'}
                 title={'Bize Ulaşın'}
-                onPressCard={() => navigation.navigate('operationStack')}
+                onPressCard={() => navigation.navigate('operationStack', { screen: 'contact' })}
               />
             </View>
           </View>
