@@ -4,9 +4,9 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from '../../../
 
 export default StyleSheet.create({
   card: {
-    width: wp('30%'),
-    height: wp('30%'),
-    borderRadius: wp('30%') / 2,
+    width: hp('17%'),
+    height: hp('17%'),
+    borderRadius: hp('17%') / 2,
     alignItems: 'center',
     justifyContent: 'center',
   },

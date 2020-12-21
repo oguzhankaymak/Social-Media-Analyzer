@@ -29,7 +29,7 @@ export default StyleSheet.create({
   },
 
   socialAnnouncementGif: {
-    width: wp('49%'),
+    width: hp('23%'),
     height: hp('27%'),
   },
 

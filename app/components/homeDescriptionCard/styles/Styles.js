@@ -9,7 +9,7 @@ export default StyleSheet.create({
     justifyContent: 'center',
     paddingRight: wp('18%'),
     paddingLeft: wp('2%'),
-    paddingVertical: hp('4%'),
+    paddingVertical: hp('3%'),
   },
 
   titleView: {
