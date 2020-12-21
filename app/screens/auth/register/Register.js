@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Alert } from 'react-native';
 
 import styles from './styles/Styles';
@@ -6,6 +6,7 @@ import Layout from '../../../components/layout/Layout';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Circles from '../../../components/circles/Circles';
 import Button from '../../../components/button/Button';
+import { Fonts } from '../../../theme';
 
 const Register = ({ navigation }) => {
   const [nameSurname, setnameSurname] = useState('');
@@ -13,6 +14,13 @@ const Register = ({ navigation }) => {
   const [password, setpassword] = useState('');
   const [passwordConfrim, setpasswordConfrim] = useState('');
   const [fetchingRegister, setfetchingRegister] = useState(false);
+  const inputElementRef = useRef(null);
+
+  useEffect(() => {
+    inputElementRef.current.setNativeProps({
+      style: { fontFamily: Fonts.type.PoppinsRegular },
+    });
+  }, []);
 
   const registerValidation = () => {
     setfetchingRegister(true);
@@ -31,7 +39,8 @@ const Register = ({ navigation }) => {
   };
 
   const register = () => {
-    console.log('regiter');
+    console.log(password);
+    console.log(passwordConfrim);
     setfetchingRegister(false);
   };
 
@@ -69,22 +78,24 @@ const Register = ({ navigation }) => {
           </View>
           <View style={styles.inputStyles}>
             <TextInput
+              ref={inputElementRef}
               placeholder={'Şifrenizi Giriniz'}
               style={styles.textInputStyle}
               value={password}
               onChangeText={setpassword}
               secureTextEntry={true}
-              keyboardType={'visible-password'}
+              autoCompleteType={'password'}
             />
           </View>
           <View style={styles.inputStyles}>
             <TextInput
+              ref={inputElementRef}
               placeholder={'Şifrenizi Doğrulayınız'}
               style={styles.textInputStyle}
               value={passwordConfrim}
               onChangeText={setpasswordConfrim}
               secureTextEntry={true}
-              keyboardType={'visible-password'}
+              autoCompleteType={'password'}
             />
           </View>
           <View style={styles.registerButton}>
