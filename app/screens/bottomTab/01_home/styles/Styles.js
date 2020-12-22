@@ -4,14 +4,14 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from '../../../
 
 export default StyleSheet.create({
   header: {
-    flex: 0.4,
+    flex: 0.35,
     flexDirection: 'row',
     justifyContent: 'space-evenly',
     alignItems: 'center',
   },
 
   container: {
-    flex: 0.25,
+    flex: 0.3,
   },
 
   footer: {
@@ -22,6 +22,7 @@ export default StyleSheet.create({
 
   cards: {
     flexDirection: 'row',
+    alignItems: 'center',
   },
 
   card: {

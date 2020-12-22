@@ -14,7 +14,7 @@ const Home = ({ navigation }) => {
           <Text style={styles.welcomeText}>Hoşgeldin,</Text>
           <Text style={styles.nameText}>Oğuzhan!</Text>
         </View>
-        <Image style={styles.socialAnnouncementGif} source={require('../../../assets/gifs/socialAnnouncement.gif')} />
+        <Image style={styles.socialAnnouncementGif} source={require('../../../assets/gifs/socialAnnouncement.webp')} />
       </View>
       <View style={styles.container}>
         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
