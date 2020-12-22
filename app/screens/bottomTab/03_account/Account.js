@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { View, Text, Image, TouchableOpacity, TextInput, Alert } from 'react-native';
 
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
@@ -7,6 +7,7 @@ import styles from './styles/Styles';
 import Layout from '../../../components/layout/Layout';
 import { EditIcon, CloseIcon } from '../../../components/icons';
 import Button from '../../../components/button/Button';
+import { Fonts } from '../../../theme';
 
 const Account = () => {
   const initialState = {
@@ -19,6 +20,14 @@ const Account = () => {
   const [email, setemail] = useState(initialState.email);
   const [password, setpassword] = useState(initialState.password);
   const [fetching, setFetching] = useState(false);
+
+  const inputElementRef = useRef(null);
+
+  useEffect(() => {
+    inputElementRef.current.setNativeProps({
+      style: { fontFamily: Fonts.type.PoppinsRegular },
+    });
+  }, []);
 
   const updateValidation = () => {
     setFetching(true);
@@ -96,12 +105,13 @@ const Account = () => {
           </View>
           <View style={styles.inputStyles}>
             <TextInput
+              ref={inputElementRef}
               placeholder={'Şifrenizi Giriniz'}
               style={styles.textInputStyle}
               value={password}
               onChangeText={setpassword}
+              autoCompleteType={'password'}
               secureTextEntry={true}
-              keyboardType={'visible-password'}
               editable={editable}
             />
           </View>
