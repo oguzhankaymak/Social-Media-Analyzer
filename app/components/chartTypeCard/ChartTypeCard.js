@@ -5,7 +5,7 @@ import styles from './styles/Styles';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Colors } from '../../theme';
 
-const ChartTypeCard = ({ type, title }) => {
+const ChartTypeCard = ({ type, title, onPressCard }) => {
   const gradientColor = () => {
     if (type === 'today') {
       return Colors.pureRedBrightRedLinearGradientColor;
@@ -31,7 +31,7 @@ const ChartTypeCard = ({ type, title }) => {
   };
 
   return (
-    <TouchableOpacity>
+    <TouchableOpacity onPress={onPressCard}>
       <LinearGradient
         colors={gradientColor()}
         start={{ x: 2, y: 0.3 }}
