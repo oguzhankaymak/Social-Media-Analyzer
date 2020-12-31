@@ -5,13 +5,17 @@ import styles from './styles/MyChartsListStyle';
 import ChartTypeCard from '../../../components/chartTypeCard/ChartTypeCard';
 import Layout from '../../../components/layout/Layout';
 
-const MyChartsList = () => {
+const MyChartsList = ({ navigation }) => {
   return (
     <Layout>
       <View style={styles.container}>
         <ScrollView bounces={false}>
           <View style={styles.chartTypeCardView}>
-            <ChartTypeCard type={'today'} title={'Günlük Grafikleriniz'} />
+            <ChartTypeCard
+              type={'today'}
+              title={'Günlük Grafikleriniz'}
+              onPressCard={() => navigation.navigate('dailyChart')}
+            />
           </View>
           <View style={styles.chartTypeCardView}>
             <ChartTypeCard type={'week'} title={'Haftalık Grafikleriniz'} />
