@@ -3,10 +3,12 @@ const statisticsByMonth = {
   data: [300, 320, 325, 399, 470, 500],
 };
 
-const statisticsByDay = {
-  labels: ['Gece Yarısı', 'Sabah', 'Öğlen', 'Akşam'], // optional
-  data: [300, 390, 300, 259],
-};
+const statisticsByDay = [
+  { x: '01 Ocak 2021  9 - 10', y: 300 },
+  { x: '01 Ocak 2021  13 - 14', y: 302 },
+  { x: '01 Ocak 2021  17 - 18', y: 290 },
+  { x: '01 Ocak 2021  21 - 22', y: 330 },
+];
 
 const statisticsByWeeks = [
   { x: '04.01.2021 Pzt', y: 300 },

@@ -8,28 +8,39 @@ import styles from './styles/DailyChartStyle';
 import { GlobalStyles } from '../../../theme';
 import ChartInfoCard from '../../../components/chartInfoCard/ChartInfoCard';
 import ChartContentCard from '../../../components/chartContentCard/ChartContentCard';
+import { ChartMock } from '../../../mock';
 
 const DailyChart = () => {
-  const [loading, setLoading] = useState(true);
+  const [dailyCardData, setdailyCardData] = useState(null);
+  const [dailyChartData, setdailyChartData] = useState(null);
+  const [fetchingData, setfetchingData] = useState(false);
 
   useEffect(() => {
-    setTimeout(() => {
-      setLoading(false);
-    }, 700);
+    getDailyData();
   }, []);
 
-  const chartData = [
-    { x: '9 - 10', y: 300 },
-    { x: '13 - 14', y: 302 },
-    { x: '17 - 18', y: 290 },
-    { x: '21 - 22', y: 330 },
-  ];
+  const getDailyData = () => {
+    setTimeout(() => {
+      setfetchingData(true);
+      setdailyCardData(ChartMock.statisticsByDay);
+      let chartData = [];
+      let value;
+      for (let i = 0; i < ChartMock.statisticsByDay.length; i++) {
+        value = {};
+        value.x = ChartMock.statisticsByDay[i].x.split('  ')[1];
+        value.y = ChartMock.statisticsByDay[i].y;
+        chartData.push(value);
+      }
+      setdailyChartData(chartData);
+      setfetchingData(false);
+    }, 1000);
+  };
 
   const renderChart = () => {
     return (
       <VictoryChart theme={VictoryTheme.material} width={styles.chart.width}>
         <VictoryLine
-          data={chartData}
+          data={dailyChartData}
           style={{
             data: { stroke: '#c43a31' },
             parent: { border: '1px solid #ccc' },
@@ -47,10 +58,10 @@ const DailyChart = () => {
   return (
     <Layout>
       <View style={styles.header}>
-        <Text style={styles.title}>Saat - Takipçi Saysı Grafiğiniz</Text>
+        <Text style={styles.title}>Günlük - Takipçi Grafiğiniz</Text>
       </View>
       <ScrollView bounces={false}>
-        {loading ? (
+        {fetchingData || !dailyChartData ? (
           <View style={GlobalStyles.fCenter}>
             <ActivityIndicator size={'large'} color={'black'} />
           </View>
@@ -62,18 +73,12 @@ const DailyChart = () => {
           <View style={styles.infoCard}>
             <ChartInfoCard />
           </View>
-          <View style={styles.contentCard}>
-            <ChartContentCard data={300} datetime={'01 Ocak 2021 9.00 - 10.00'} />
-          </View>
-          <View style={styles.contentCard}>
-            <ChartContentCard data={302} datetime={'01 Ocak 2021 13.00 - 14.00'} />
-          </View>
-          <View style={styles.contentCard}>
-            <ChartContentCard data={290} datetime={'01 Ocak 2021 17.00 - 18.00'} />
-          </View>
-          <View style={styles.contentCard}>
-            <ChartContentCard data={330} datetime={'01 Ocak 2021 21.00 - 22.00'} />
-          </View>
+          {dailyCardData &&
+            dailyCardData.map((element, index) => (
+              <View style={styles.contentCard} key={String(index)}>
+                <ChartContentCard data={element.y} datetime={element.x} />
+              </View>
+            ))}
         </View>
       </ScrollView>
     </Layout>
