@@ -4,7 +4,7 @@ import { View, Text, ActivityIndicator, ScrollView } from 'react-native';
 import { VictoryChart, VictoryTheme, VictoryBar, VictoryLegend, VictoryAxis } from 'victory-native';
 
 import Layout from '../../../components/layout/Layout';
-import styles from './styles/DailyChartStyle';
+import styles from './styles/WeeklyChartStyle';
 import { GlobalStyles } from '../../../theme';
 import ChartInfoCard from '../../../components/chartInfoCard/ChartInfoCard';
 import ChartContentCard from '../../../components/chartContentCard/ChartContentCard';

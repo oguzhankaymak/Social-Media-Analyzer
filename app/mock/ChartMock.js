@@ -1,7 +1,9 @@
-const statisticsByMonth = {
-  labels: ['Oca', 'Şub', 'Mar', 'Nis', 'May', 'Haz'],
-  data: [300, 320, 325, 399, 470, 500],
-};
+const statisticsByMonth = [
+  { x: 'I.Hafta', y: 300 },
+  { x: 'II.Hafta', y: 400 },
+  { x: 'III.Hafta', y: 350 },
+  { x: 'IV.Hafta', y: 550 },
+];
 
 const statisticsByDay = [
   { x: '01 Ocak 2021  9 - 10', y: 300 },
@@ -20,18 +22,4 @@ const statisticsByWeeks = [
   { x: '10.01.2021 Paz', y: 330 },
 ];
 
-const requestData = [
-  { date: '2017-01-02', count: 1 },
-  { date: '2017-01-03', count: 2 },
-  { date: '2017-01-04', count: 3 },
-  { date: '2017-01-05', count: 4 },
-  { date: '2017-01-06', count: 5 },
-  { date: '2017-01-30', count: 2 },
-  { date: '2017-01-31', count: 3 },
-  { date: '2017-03-01', count: 2 },
-  { date: '2017-04-02', count: 4 },
-  { date: '2017-03-05', count: 2 },
-  { date: '2017-02-30', count: 4 },
-];
-
-export default { statisticsByDay, statisticsByMonth, statisticsByWeeks, requestData };
+export default { statisticsByDay, statisticsByMonth, statisticsByWeeks };
