@@ -8,15 +8,15 @@ const statisticsByDay = {
   data: [300, 390, 300, 259],
 };
 
-const statisticsByWeeks = {
-  labels: ['I. Hafta', 'II. Hafta', 'III. Hafta', 'IV. Hafta'],
-  datasets: [
-    {
-      data: [308, 390, 320, 310],
-      colors: [(opacity = 1) => `red`, (opacity = 1) => `#ff00ff`, (opacity = 1) => `rgba(255, 0, 50, ${opacity})`],
-    },
-  ],
-};
+const statisticsByWeeks = [
+  { x: '04.01.2021 Pzt', y: 300 },
+  { x: '05.01.2021 Sal', y: 320 },
+  { x: '06.01.2021 Çar', y: 310 },
+  { x: '07.01.2021 Per', y: 305 },
+  { x: '08.01.2021 Cum', y: 330 },
+  { x: '09.01.2021 Cmt', y: 340 },
+  { x: '10.01.2021 Paz', y: 330 },
+];
 
 const requestData = [
   { date: '2017-01-02', count: 1 },
