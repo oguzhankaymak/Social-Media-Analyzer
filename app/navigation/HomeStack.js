@@ -3,13 +3,15 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 const Stack = createStackNavigator();
 
+import MyChartsStack from './stacks/MyChartsStack';
 import HomeScreen from '../screens/bottomTab/01_home/Home';
-import OperationStack from './stacks/OperationStack';
+import Contact from '../screens/operations/contact/Contact';
 
 const HomeNavigator = () => (
   <Stack.Navigator headerMode="none">
     <Stack.Screen name="home" component={HomeScreen} />
-    <Stack.Screen name="operationStack" component={OperationStack} />
+    <Stack.Screen name="contact" component={Contact} />
+    <Stack.Screen name="chartsStack" component={MyChartsStack} />
   </Stack.Navigator>
 );
 

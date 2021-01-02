@@ -29,15 +29,11 @@ const Home = ({ navigation }) => {
               <RoundCard
                 name={'charts'}
                 title={'Grafiklerim'}
-                onPressCard={() => navigation.navigate('operationStack', { screen: 'myChartsStack' })}
+                onPressCard={() => navigation.navigate('chartsStack', { screen: 'chartsList' })}
               />
             </View>
             <View style={styles.card}>
-              <RoundCard
-                name={'contact'}
-                title={'Bize Ulaşın'}
-                onPressCard={() => navigation.navigate('operationStack', { screen: 'contact' })}
-              />
+              <RoundCard name={'contact'} title={'Bize Ulaşın'} onPressCard={() => navigation.navigate('contact')} />
             </View>
           </View>
         </ScrollView>
