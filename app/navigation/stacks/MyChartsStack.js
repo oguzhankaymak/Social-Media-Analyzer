@@ -11,7 +11,7 @@ import AnnualChart from '../../screens/operations/myCharts/AnnualChart';
 
 const MyChartsStack = () => (
   <Stack.Navigator headerMode="none">
-    <Stack.Screen name="myChartsList" component={MyChartsList} />
+    <Stack.Screen name="chartsList" component={MyChartsList} />
     <Stack.Screen name="dailyChart" component={DailyChart} />
     <Stack.Screen name="weeklyChart" component={WeeklyChart} />
     <Stack.Screen name="monthlyChart" component={MonthlyChart} />

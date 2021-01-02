@@ -20,24 +20,20 @@ const Home = ({ navigation }) => {
         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
           <View style={styles.cards}>
             <View style={styles.card}>
-              <RoundCard name={'instagram'} title={'İşlemler'} />
+              <RoundCard
+                name={'instagram'}
+                title={'İşlemler'}
+                onPressCard={() => navigation.navigate('instagramOperationStack')}
+              />
             </View>
             <View style={styles.card}>
               <RoundCard name={'advice'} title={'Öneriler'} />
             </View>
             <View style={styles.card}>
-              <RoundCard
-                name={'charts'}
-                title={'Grafiklerim'}
-                onPressCard={() => navigation.navigate('operationStack', { screen: 'myChartsStack' })}
-              />
+              <RoundCard name={'charts'} title={'Grafiklerim'} onPressCard={() => navigation.navigate('chartsStack')} />
             </View>
             <View style={styles.card}>
-              <RoundCard
-                name={'contact'}
-                title={'Bize Ulaşın'}
-                onPressCard={() => navigation.navigate('operationStack', { screen: 'contact' })}
-              />
+              <RoundCard name={'contact'} title={'Bize Ulaşın'} onPressCard={() => navigation.navigate('contact')} />
             </View>
           </View>
         </ScrollView>

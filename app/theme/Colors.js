@@ -26,4 +26,5 @@ export default {
   mediumStrongOrangeBrightCyan: ['#D47B2A', '#3EDED9'],
   brightYellowStrongMagenta: ['#EBD63B', '#D42FD3'],
   brightYellowMediumStrongOrange: ['#EBD63B', '#D47B2A'],
+  darkModerateBlueVeryDarkBlueLinearGradient: ['#4c669f', '#3b5998', '#192f6a'],
 };
