@@ -1,15 +1,16 @@
-const statisticsByMonth = [
-  { x: 'I.Hafta', y: 300 },
-  { x: 'II.Hafta', y: 400 },
-  { x: 'III.Hafta', y: 350 },
-  { x: 'IV.Hafta', y: 550 },
-];
-
 const statisticsByDay = [
   { x: '01 Ocak 2021  9 - 10', y: 300 },
   { x: '01 Ocak 2021  13 - 14', y: 302 },
   { x: '01 Ocak 2021  17 - 18', y: 290 },
   { x: '01 Ocak 2021  21 - 22', y: 330 },
+];
+
+//in month
+const statisticsByMonth = [
+  { x: 'I.Hafta', y: 300 },
+  { x: 'II.Hafta', y: 400 },
+  { x: 'III.Hafta', y: 350 },
+  { x: 'IV.Hafta', y: 550 },
 ];
 
 const statisticsByWeeks = [
@@ -22,4 +23,19 @@ const statisticsByWeeks = [
   { x: '10.01.2021 Paz', y: 330 },
 ];
 
-export default { statisticsByDay, statisticsByMonth, statisticsByWeeks };
+// x is month number and year
+const statisticsByYear = [
+  { x: '1 2021', y: 300 },
+  { x: '2 2021', y: 320 },
+  { x: '3 2021', y: 310 },
+  { x: '4 2021', y: 305 },
+  { x: '5 2021', y: 330 },
+  { x: '6 2021', y: 340 },
+  { x: '8 2021', y: 310 },
+  { x: '9 2021', y: 390 },
+  { x: '10 2021', y: 410 },
+  { x: '11 2021', y: 430 },
+  { x: '12 2021', y: 420 },
+];
+
+export default { statisticsByDay, statisticsByMonth, statisticsByWeeks, statisticsByYear };

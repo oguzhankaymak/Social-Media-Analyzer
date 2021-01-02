@@ -32,7 +32,11 @@ const MyChartsList = ({ navigation }) => {
             />
           </View>
           <View style={styles.chartTypeCardView}>
-            <ChartTypeCard type={'year'} title={'Yıllık Grafikleriniz'} />
+            <ChartTypeCard
+              type={'year'}
+              title={'Yıllık Grafikleriniz'}
+              onPressCard={() => navigation.navigate('annualChart')}
+            />
           </View>
         </ScrollView>
       </View>
