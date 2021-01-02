@@ -18,13 +18,25 @@ const MyChartsList = ({ navigation }) => {
             />
           </View>
           <View style={styles.chartTypeCardView}>
-            <ChartTypeCard type={'week'} title={'Haftalık Grafikleriniz'} />
+            <ChartTypeCard
+              type={'week'}
+              title={'Haftalık Grafikleriniz'}
+              onPressCard={() => navigation.navigate('weeklyChart')}
+            />
           </View>
           <View style={styles.chartTypeCardView}>
-            <ChartTypeCard type={'month'} title={'Aylık Grafikleriniz'} />
+            <ChartTypeCard
+              type={'month'}
+              title={'Aylık Grafikleriniz'}
+              onPressCard={() => navigation.navigate('monthlyChart')}
+            />
           </View>
           <View style={styles.chartTypeCardView}>
-            <ChartTypeCard type={'year'} title={'Yıllık Grafikleriniz'} />
+            <ChartTypeCard
+              type={'year'}
+              title={'Yıllık Grafikleriniz'}
+              onPressCard={() => navigation.navigate('annualChart')}
+            />
           </View>
         </ScrollView>
       </View>
