@@ -5,11 +5,12 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from '../../../
 export default StyleSheet.create({
   card: {
     width: wp('93%'),
-    minHeight: 180,
+    height: hp('38%'),
     borderRadius: 20,
   },
+
   header: {
-    height: 50,
+    height: hp('7.3%'),
     paddingVertical: hp('2%'),
     paddingHorizontal: hp('2%'),
     flexDirection: 'row',
@@ -28,6 +29,10 @@ export default StyleSheet.create({
   },
 
   container: {
-    paddingHorizontal: hp('2%'),
+    flex: 1,
+    paddingLeft: wp('3%'),
+    paddingRight: wp('5%'),
+
+    justifyContent: 'space-around',
   },
 });
