@@ -22,6 +22,8 @@ export default {
   mediumStrongOrange: '#D47B2A',
   brightYellow: '#EBD63B',
   strongMagenta: '#D42FD3',
+  modalBackgroundColor: '#000000aa',
+  veryDarkMostlyBlackRed: '#2e2a2a',
   pureRedBrightRedLinearGradientColor: ['#ff0000', '#EE343D'],
   mediumStrongOrangeBrightCyan: ['#D47B2A', '#3EDED9'],
   brightYellowStrongMagenta: ['#EBD63B', '#D42FD3'],
