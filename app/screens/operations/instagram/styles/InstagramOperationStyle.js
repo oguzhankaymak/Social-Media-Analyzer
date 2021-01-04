@@ -9,15 +9,9 @@ export default StyleSheet.create({
     justifyContent: 'space-around',
   },
 
-  chartTypeCardView: {
-    marginVertical: hp('2%'),
-  },
-
   content: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingVertical: 10,
-    paddingHorizontal: 5,
   },
 
   text: {

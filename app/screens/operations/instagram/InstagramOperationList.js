@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, ScrollView } from 'react-native';
 
 import styles from './styles/InstagramOperationStyle';
@@ -6,14 +6,34 @@ import Layout from '../../../components/layout/Layout';
 import VerticalLinearCard from '../../../components/verticalLinearCard/VerticalLinearCard';
 import { KeyIcon, CreditCardIcon, InfoIcon } from '../../../components/icons';
 import { Colors } from '../../../theme';
+import InstagramOperationFormModal from '../../../components/instagramOperationFormModal/InstagramOperationFormModal';
 
-const InstagramOperationList = () => {
+const InstagramOperationList = ({ navigation }) => {
+  const [formModalVisible, setformModalVisible] = useState(false);
+  const [form, setform] = useState('');
+
+  const onpressPublicCard = () => {
+    setform('public');
+    setformModalVisible(true);
+  };
+
+  const onpressPrivateCard = () => {
+    setform('private');
+    setformModalVisible(true);
+  };
+
   return (
     <Layout>
+      <InstagramOperationFormModal
+        modalVisible={formModalVisible}
+        activeForm={form}
+        close={() => setformModalVisible(false)}
+      />
       <View style={styles.container}>
         <VerticalLinearCard
           headerTitle={'Açık Hesap İşlemleri'}
-          linearColor={Colors.darkModerateBlueVeryDarkBlueLinearGradient}>
+          linearColor={Colors.darkModerateBlueVeryDarkBlueLinearGradient}
+          onPressCard={onpressPublicCard}>
           <View style={styles.content}>
             <KeyIcon stroke={'white'} />
             <Text style={styles.text}>Herhangi bir şifre bilgisi vermeden işlemlerinizi gerçekleştirebilirsiniz.</Text>
@@ -29,7 +49,8 @@ const InstagramOperationList = () => {
         </VerticalLinearCard>
         <VerticalLinearCard
           headerTitle={'Gizli Hesap İşlemleri'}
-          linearColor={Colors.pureRedBrightRedLinearGradientColor}>
+          linearColor={Colors.pureRedBrightRedLinearGradientColor}
+          onPressCard={onpressPrivateCard}>
           <View style={styles.content}>
             <KeyIcon stroke={'white'} />
             <Text style={styles.text}>
