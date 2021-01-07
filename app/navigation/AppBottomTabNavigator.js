@@ -8,13 +8,17 @@ import AccountScreen from '../screens/bottomTab/03_account/Account';
 import { HomeIcon, UserIcon } from '../components/icons';
 
 const AppBottomTabNavigator = () => (
-  <Tab.Navigator>
+  <Tab.Navigator
+    tabBarOptions={{
+      style: { height: 50 },
+      tabStyle: { height: 50 },
+    }}>
     <Tab.Screen
       name="homeNavigator"
       component={HomeNavigator}
       options={{
         tabBarLabel: 'Anasayfa',
-        tabBarIcon: ({ color, size }) => <HomeIcon name="home" color={color} size={size} />,
+        tabBarIcon: ({ color, size }) => <HomeIcon name="home" color={color} width={24} height={24} />,
       }}
     />
     <Tab.Screen
@@ -22,7 +26,7 @@ const AppBottomTabNavigator = () => (
       component={AccountScreen}
       options={{
         tabBarLabel: 'Hesabım',
-        tabBarIcon: ({ color, size }) => <UserIcon name="home" color={color} size={size} />,
+        tabBarIcon: ({ color, size }) => <UserIcon name="home" color={color} width={24} height={24} />,
       }}
     />
   </Tab.Navigator>

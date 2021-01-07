@@ -17,7 +17,7 @@ import { CloseIcon, DoubleRightIcon, WarningIcon } from '../icons';
 import { widthPercentageToDP as wp } from '../../utils/PercentageCalculator';
 import RadioButton from '../radioButton/RadioButton';
 
-const InstagramOperationFormModal = ({ modalVisible, activeForm, close }) => {
+const InstagramOperationFormModal = ({ modalVisible, activeForm, close, onPressNext }) => {
   const [warningMessageControl, setwarningMessageControl] = useState(false);
   const [activeRadioButton, setactiveRadioButton] = useState(1);
 
@@ -70,7 +70,7 @@ const InstagramOperationFormModal = ({ modalVisible, activeForm, close }) => {
               </View>
             </View>
           </View>
-          <TouchableOpacity style={styles.button}>
+          <TouchableOpacity style={styles.button} onPress={onPressNext}>
             <Text style={styles.buttonText}>İlerle</Text>
             <View style={styles.doubleRightIconView}>
               <DoubleRightIcon
@@ -93,7 +93,7 @@ const InstagramOperationFormModal = ({ modalVisible, activeForm, close }) => {
           <Text style={styles.formItemTitle}>Şifre</Text>
           <TextInput style={styles.textInput} placeholder={'Şifre'} maxLength={40} />
         </View>
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity style={styles.button} onPress={onPressNext}>
           <Text style={styles.buttonText}>İlerle</Text>
           <View style={styles.doubleRightIconView}>
             <DoubleRightIcon

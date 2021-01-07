@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { View, Text, ScrollView } from 'react-native';
+import { View, Text } from 'react-native';
 
-import styles from './styles/InstagramOperationStyle';
+import styles from './styles/InstagramOperationListStyle';
 import Layout from '../../../components/layout/Layout';
 import VerticalLinearCard from '../../../components/verticalLinearCard/VerticalLinearCard';
 import { KeyIcon, CreditCardIcon, InfoIcon } from '../../../components/icons';
@@ -22,12 +22,18 @@ const InstagramOperationList = ({ navigation }) => {
     setformModalVisible(true);
   };
 
+  const next = () => {
+    setformModalVisible(false);
+    navigation.navigate('instagramOperation');
+  };
+
   return (
     <Layout>
       <InstagramOperationFormModal
         modalVisible={formModalVisible}
         activeForm={form}
         close={() => setformModalVisible(false)}
+        onPressNext={next}
       />
       <View style={styles.container}>
         <VerticalLinearCard
