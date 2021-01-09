@@ -15,6 +15,10 @@ export default StyleSheet.create({
     alignItems: 'center',
   },
 
+  header: {
+    flex: 0.6,
+  },
+
   profile: {
     justifyContent: 'center',
     alignItems: 'center',
@@ -73,7 +77,7 @@ export default StyleSheet.create({
   accountInfoCard: {
     flexDirection: 'row',
     marginTop: hp('3%'),
-    height: 85,
+    height: 90,
     borderColor: Colors.lineOpacityColor,
     borderTopWidth: 1.5,
     borderBottomWidth: 1.5,
@@ -96,5 +100,66 @@ export default StyleSheet.create({
     fontFamily: Fonts.type.PoppinsRegular,
     fontSize: Fonts.size.h22,
     color: Colors.grayishBlue,
+  },
+
+  body: {
+    flex: 0.4,
+  },
+
+  socialInfoCards: {
+    flex: 1,
+    paddingHorizontal: 8,
+    justifyContent: 'space-evenly',
+    flexDirection: 'row',
+  },
+
+  socialInfoLikeCard: {
+    flex: 0.5,
+    height: hp('15%'),
+    borderTopLeftRadius: 10,
+    borderBottomLeftRadius: 10,
+    backgroundColor: Colors.softPink,
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingLeft: wp('6%'),
+  },
+
+  socialInfoCommentCard: {
+    flex: 0.5,
+    height: hp('15%'),
+    borderTopRightRadius: 10,
+    borderBottomRightRadius: 10,
+    backgroundColor: Colors.verySoftBlue,
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingLeft: wp('6%'),
+  },
+
+  socialInfoIconCard: {
+    position: 'absolute',
+    bottom: 1,
+    right: 1,
+    padding: wp('2%'),
+  },
+
+  socialInfoIconView: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    borderWidth: 2,
+    borderColor: 'white',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+  socialInfoText: {
+    fontFamily: Fonts.type.PoppinsSemiBold,
+    fontSize: Fonts.size.h3,
+    color: Colors.white,
+  },
+
+  icon: {
+    width: 24,
+    height: 24,
   },
 });
