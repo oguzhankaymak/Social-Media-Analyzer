@@ -3,7 +3,7 @@ import { ImageBackground, View, Text, Image, TouchableOpacity } from 'react-nati
 
 import styles from './styles/InstagramOperationStyle';
 import { InstagramOperationMock } from '../../../mock';
-import { CommentIcon, HeartIcon } from '../../../components/icons';
+import { CommentIcon, HeartIcon, InfoIcon } from '../../../components/icons';
 
 const InstagramOperation = () => {
   const _renderAccountInfo = () => (
@@ -63,6 +63,10 @@ const InstagramOperation = () => {
       <View style={styles.header}>
         {_renderHeader()}
         {_renderAccountInfo()}
+      </View>
+      <View style={styles.infoView}>
+        <InfoIcon width={styles.icon.width} height={styles.icon.height} color={'#8EA4B6'} />
+        <Text style={styles.infoText}>İlgili sayılara tıklayarak detayları görebilirsiniz</Text>
       </View>
       <View style={styles.body}>{_renderBody()}</View>
     </View>

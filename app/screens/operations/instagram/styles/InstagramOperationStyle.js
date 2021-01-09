@@ -102,7 +102,22 @@ export default StyleSheet.create({
     color: Colors.grayishBlue,
   },
 
+  infoView: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  infoText: {
+    fontFamily: Fonts.type.PoppinsRegular,
+    fontSize: Fonts.size.h2,
+    color: Colors.grayishBlue,
+    marginLeft: wp('2%'),
+  },
+
   body: {
+    paddingTop: 10,
+    marginTop: 10,
     flex: 0.4,
   },
 
