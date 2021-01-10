@@ -23,7 +23,13 @@ const InstagramOperation = ({ navigation }) => {
           onPress={() => navigation.navigate('following')}
         />
       }
-      {<Info title={'Takip Etmeyen'} value={InstagramOperationMock.notToBeFollowerd.length} />}
+      {
+        <Info
+          title={'Takip Etmeyen'}
+          value={InstagramOperationMock.notToBeFollowerd.length}
+          onPress={() => navigation.navigate('notToBeFollowed')}
+        />
+      }
     </View>
   );
 
