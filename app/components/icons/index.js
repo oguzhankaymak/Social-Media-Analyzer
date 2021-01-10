@@ -1,5 +1,6 @@
 export { default as ArrowRightIcon } from './ArrowRightIcon';
 export { default as BoardListIcon } from './BoardListIcon';
+export { default as CalendarIcon } from './CalendarIcon';
 export { default as ChartSquareBarIcon } from './ChartSquareBarIcon';
 export { default as CloseIcon } from './CloseIcon';
 export { default as CommentIcon } from './CommentIcon';
@@ -14,6 +15,7 @@ export { default as InfoIcon } from './InfoIcon';
 export { default as InstagramIcon } from './InstagramIcon';
 export { default as KeyIcon } from './KeyIcon';
 export { default as PieChartIcon } from './PieChartIcon';
+export { default as SearchIcon } from './SearchIcon';
 export { default as SocialGirl } from './SocialGirl';
 export { default as UserIcon } from './UserIcon';
 export { default as WarningIcon } from './WarningIcon';

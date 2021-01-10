@@ -5,11 +5,17 @@ import styles from './styles/InstagramOperationStyle';
 import { InstagramOperationMock } from '../../../mock';
 import { CommentIcon, HeartIcon, InfoIcon } from '../../../components/icons';
 
-const InstagramOperation = () => {
+const InstagramOperation = ({ navigation }) => {
   const _renderAccountInfo = () => (
     <View style={styles.accountInfoCard}>
       {<Info title={'Gönderi'} value={InstagramOperationMock.post_count} />}
-      {<Info title={'Takipçi'} value={InstagramOperationMock.followers_count} />}
+      {
+        <Info
+          title={'Takipçi'}
+          value={InstagramOperationMock.followers_count}
+          onPress={() => navigation.navigate('followers')}
+        />
+      }
       {<Info title={'Takip Edilen'} value={InstagramOperationMock.following_count} />}
       {<Info title={'Takip Etmeyen'} value={InstagramOperationMock.notToBeFollowerd.length} />}
     </View>
