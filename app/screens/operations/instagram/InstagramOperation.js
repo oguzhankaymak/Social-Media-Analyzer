@@ -1,14 +1,33 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ImageBackground, View, Text, Image, TouchableOpacity } from 'react-native';
 
 import styles from './styles/InstagramOperationStyle';
 import { InstagramOperationMock } from '../../../mock';
 import { CommentIcon, HeartIcon, InfoIcon } from '../../../components/icons';
+import InstagramOperationModal from '../../../components/instagramOperationModal/InstagramOperationModal';
 
 const InstagramOperation = ({ navigation }) => {
+  const [operationModalName, setoperationModalName] = useState('');
+  const [count, setcount] = useState(0);
+
+  const onPressPosts = () => {
+    setcount(InstagramOperationMock.post_count);
+    setoperationModalName('posts');
+  };
+
+  const onPressLikes = () => {
+    setcount(InstagramOperationMock.total_likes);
+    setoperationModalName('likes');
+  };
+
+  const onPressComments = () => {
+    setcount(InstagramOperationMock.total_comments);
+    setoperationModalName('comments');
+  };
+
   const _renderAccountInfo = () => (
     <View style={styles.accountInfoCard}>
-      {<Info title={'Gönderi'} value={InstagramOperationMock.post_count} />}
+      {<Info title={'Gönderi'} value={InstagramOperationMock.post_count} onPress={onPressPosts} />}
       {
         <Info
           title={'Takipçi'}
@@ -52,16 +71,16 @@ const InstagramOperation = ({ navigation }) => {
 
   const _renderBody = () => (
     <View style={styles.socialInfoCards}>
-      <TouchableOpacity style={styles.socialInfoLikeCard} activeOpacity={100}>
-        <Text style={styles.socialInfoText}>50</Text>
+      <TouchableOpacity style={styles.socialInfoLikeCard} activeOpacity={100} onPress={onPressLikes}>
+        <Text style={styles.socialInfoText}>{InstagramOperationMock.total_likes}</Text>
         <View style={styles.socialInfoIconCard}>
           <View style={styles.socialInfoIconView}>
             <HeartIcon color={'white'} width={styles.icon.width} height={styles.icon.height} />
           </View>
         </View>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.socialInfoCommentCard} activeOpacity={100}>
-        <Text style={styles.socialInfoText}>50</Text>
+      <TouchableOpacity style={styles.socialInfoCommentCard} activeOpacity={100} onPress={onPressComments}>
+        <Text style={styles.socialInfoText}>{InstagramOperationMock.total_comments}</Text>
         <View style={styles.socialInfoIconCard}>
           <View style={styles.socialInfoIconView}>
             <CommentIcon color={'white'} width={styles.icon.width} height={styles.icon.height} />
@@ -73,6 +92,12 @@ const InstagramOperation = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
+      <InstagramOperationModal
+        modalVisible={operationModalName?.length > 0}
+        modalName={operationModalName}
+        count={count}
+        close={() => setoperationModalName('')}
+      />
       <ImageBackground source={require('../../../assets/img/oval.jpg')} style={styles.headerImage}>
         <View style={styles.profile}>
           <Image source={require('../../../assets/img/avatar.png')} style={styles.image} />
