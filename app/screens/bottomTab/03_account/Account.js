@@ -2,14 +2,18 @@ import React, { useState, useEffect, useRef } from 'react';
 import { View, Text, Image, TouchableOpacity, TextInput, Alert } from 'react-native';
 
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { useDispatch } from 'react-redux';
 
 import styles from './styles/Styles';
 import Layout from '../../../components/layout/Layout';
 import { EditIcon, CloseIcon } from '../../../components/icons';
 import Button from '../../../components/button/Button';
 import { Fonts } from '../../../theme';
+import UserActions from '../../../redux/UserItemRedux';
 
 const Account = () => {
+  const dispatch = useDispatch();
+
   const initialState = {
     nameSurname: 'Oğuzhan Kaymak',
     email: 'oguzhankaymakdev@gmail.com',
@@ -54,11 +58,13 @@ const Account = () => {
   };
 
   const logout = () => {
-    setFetching(true);
-    setTimeout(() => {
-      console.log('logout');
+    try {
+      setFetching(true);
+      dispatch(UserActions.resetUser());
       setFetching(false);
-    }, 5000);
+    } catch (error) {
+      console.log(error, 'error on logout');
+    }
   };
   return (
     <Layout>
