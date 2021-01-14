@@ -7,6 +7,8 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import Circles from '../../../components/circles/Circles';
 import Button from '../../../components/button/Button';
 import { Fonts } from '../../../theme';
+import { emailIsValid } from '../../../utils/Functions';
+import request from '../../../utils/Request';
 
 const Register = ({ navigation }) => {
   const [nameSurname, setnameSurname] = useState('');
@@ -14,34 +16,76 @@ const Register = ({ navigation }) => {
   const [password, setpassword] = useState('');
   const [passwordConfrim, setpasswordConfrim] = useState('');
   const [fetchingRegister, setfetchingRegister] = useState(false);
-  const inputElementRef = useRef(null);
+  const passwordElementRef = useRef(null);
+  const passwordConfrimElementRef = useRef(null);
 
   useEffect(() => {
-    inputElementRef.current.setNativeProps({
+    passwordElementRef.current.setNativeProps({
+      style: { fontFamily: Fonts.type.PoppinsRegular },
+    });
+
+    passwordConfrimElementRef.current.setNativeProps({
       style: { fontFamily: Fonts.type.PoppinsRegular },
     });
   }, []);
 
+  const resetForm = () => {
+    setnameSurname('');
+    setemail('');
+    setpassword('');
+    setpasswordConfrim('');
+  };
+
   const registerValidation = () => {
-    setfetchingRegister(true);
     let errorMessage;
-    if (!nameSurname || nameSurname.length < 4) errorMessage = 'Lütfen geçerli ad soyad giriniz';
-    else if (!email || email.length < 5 || !email.includes('@'))
-      errorMessage = 'Lütfen geçerli bir email adresi giriniz.';
+    if (!nameSurname || nameSurname.length < 4 || !nameSurname.includes(' '))
+      errorMessage = 'Lütfen geçerli ad soyad giriniz';
+    else if (!email || !emailIsValid(email)) errorMessage = 'Lütfen geçerli bir email adresi giriniz.';
     else if (!password || password.length < 4) errorMessage = 'Lütfen şifrenizi doğru giriniz.';
     else if (!passwordConfrim || passwordConfrim.length < 4 || password !== passwordConfrim)
       errorMessage = 'Lütfen şifre doğrulamanızı doğru giriniz.';
     return errorMessage
-      ? Alert.alert('Lütfen Dikkat!', errorMessage, [{ text: 'Tamam', onPress: () => setfetchingRegister(false) }], {
+      ? Alert.alert('Lütfen Dikkat!', errorMessage, [{ text: 'Tamam', onPress: () => {} }], {
           cancelable: false,
         })
       : register();
   };
 
-  const register = () => {
-    console.log(password);
-    console.log(passwordConfrim);
-    setfetchingRegister(false);
+  const register = async () => {
+    setfetchingRegister(true);
+    try {
+      let nameSurnameArray = nameSurname.split(' ');
+      let params = {
+        firstname: nameSurnameArray[0],
+        surname: nameSurnameArray[1],
+        email: email,
+        password: password,
+      };
+      const response = await request.post('/account/register', params);
+      if (response?.status === 200 && response?.data) {
+        navigation.navigate('login');
+        Alert.alert(
+          'Başarılı!',
+          'Kayıt olma işlemini başarılı bir şekilde gerçekleştirdiniz. Giriş yapabilirsiniz.',
+          [
+            {
+              text: 'Tamam',
+              onPress: () => {
+                navigation.navigate('login');
+              },
+            },
+          ],
+          {
+            cancelable: false,
+          },
+        );
+        resetForm();
+        return setfetchingRegister(false);
+      }
+      setfetchingRegister(false);
+    } catch (error) {
+      console.log(error, 'error on register');
+    }
   };
 
   return (
@@ -78,7 +122,7 @@ const Register = ({ navigation }) => {
           </View>
           <View style={styles.inputStyles}>
             <TextInput
-              ref={inputElementRef}
+              ref={passwordElementRef}
               placeholder={'Şifrenizi Giriniz'}
               style={styles.textInputStyle}
               value={password}
@@ -89,7 +133,7 @@ const Register = ({ navigation }) => {
           </View>
           <View style={styles.inputStyles}>
             <TextInput
-              ref={inputElementRef}
+              ref={passwordConfrimElementRef}
               placeholder={'Şifrenizi Doğrulayınız'}
               style={styles.textInputStyle}
               value={passwordConfrim}
