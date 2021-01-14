@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Alert } from 'react-native';
 
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
@@ -11,18 +11,27 @@ import Circles from '../../../components/circles/Circles';
 import Button from '../../../components/button/Button';
 import request from '../../../utils/Request';
 import UserActions from '../../../redux/UserItemRedux';
+import { emailIsValid } from '../../../utils/Functions';
+import { Fonts } from '../../../theme';
 
 const Login = ({ navigation }) => {
+  const passwordElementRef = useRef(null);
   const dispatch = useDispatch();
 
   const [email, setemail] = useState('');
   const [password, setpassword] = useState('');
   const [fetchingLogin, setfetchingLogin] = useState(false);
 
+  useEffect(() => {
+    passwordElementRef.current.setNativeProps({
+      style: { fontFamily: Fonts.type.PoppinsRegular },
+    });
+  }, []);
+
   const loginValidation = () => {
     setfetchingLogin(true);
     let errorMessage;
-    if (!email || email.length < 5) errorMessage = 'Lütfen geçerli bir email adresi giriniz.';
+    if (!email || !emailIsValid(email)) errorMessage = 'Lütfen geçerli bir email adresi giriniz.';
     else if (!password || password.length < 4) errorMessage = 'Lütfen şifrenizi doğru giriniz.';
     return errorMessage
       ? Alert.alert('Lütfen Dikkat!', errorMessage, [{ text: 'Tamam', onPress: () => setfetchingLogin(false) }], {
@@ -75,12 +84,13 @@ const Login = ({ navigation }) => {
           </View>
           <View style={styles.inputStyles}>
             <TextInput
+              ref={passwordElementRef}
               placeholder={'Şifrenizi Giriniz'}
               style={styles.textInputStyle}
               value={password}
               onChangeText={setpassword}
               secureTextEntry={true}
-              keyboardType={'visible-password'}
+              autoCompleteType={'password'}
             />
           </View>
           <View style={styles.loginButton}>
