@@ -3,7 +3,12 @@ import Immutable from 'seamless-immutable';
 
 //State
 export const INITIAL_STATE = Immutable({
-  user: null,
+  user: {
+    success: null,
+    token: null,
+    firstname: null,
+    surname: null,
+  },
 });
 
 //Types and creators

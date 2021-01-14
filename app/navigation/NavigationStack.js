@@ -10,7 +10,7 @@ import AppBottomTabNavigator from './AppBottomTabNavigator';
 import AuthNavigator from './AuthStack';
 
 const NavigationStack = () => {
-  const user = useSelector((state) => state.userItem.user);
+  const user = useSelector((state) => state.userItem.user.success);
 
   return (
     <NavigationContainer>

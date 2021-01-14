@@ -2,14 +2,19 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Alert } from 'react-native';
 
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { useDispatch } from 'react-redux';
 
 import Layout from '../../../components/layout/Layout';
 import styles from './styles/Styles';
 import { SocialGirl } from '../../../components/icons';
 import Circles from '../../../components/circles/Circles';
 import Button from '../../../components/button/Button';
+import request from '../../../utils/Request';
+import UserActions from '../../../redux/UserItemRedux';
 
 const Login = ({ navigation }) => {
+  const dispatch = useDispatch();
+
   const [email, setemail] = useState('');
   const [password, setpassword] = useState('');
   const [fetchingLogin, setfetchingLogin] = useState(false);
@@ -17,7 +22,7 @@ const Login = ({ navigation }) => {
   const loginValidation = () => {
     setfetchingLogin(true);
     let errorMessage;
-    if (!email || email.length < 5 || !email.includes('@')) errorMessage = 'Lütfen geçerli bir email adresi giriniz.';
+    if (!email || email.length < 5) errorMessage = 'Lütfen geçerli bir email adresi giriniz.';
     else if (!password || password.length < 4) errorMessage = 'Lütfen şifrenizi doğru giriniz.';
     return errorMessage
       ? Alert.alert('Lütfen Dikkat!', errorMessage, [{ text: 'Tamam', onPress: () => setfetchingLogin(false) }], {
@@ -26,9 +31,26 @@ const Login = ({ navigation }) => {
       : login();
   };
 
-  const login = () => {
-    console.log('login');
-    setfetchingLogin(false);
+  const login = async () => {
+    try {
+      const response = await request.post('/account/login', { email: email, password: password });
+
+      if (response?.status === 200 && response?.data) {
+        dispatch(UserActions.setUser(response?.data));
+        setfetchingLogin(false);
+      }
+    } catch (error) {
+      console.log('hata', error.response);
+      setfetchingLogin(false);
+      return Alert.alert(
+        'Maalesef İşleminiz Gerçekleştirilemedi!',
+        'Email adresiniz veya şifreniz yanlış.',
+        [{ text: 'Tamam', onPress: () => {} }],
+        {
+          cancelable: false,
+        },
+      );
+    }
   };
 
   return (
