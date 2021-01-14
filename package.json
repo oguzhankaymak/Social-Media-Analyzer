@@ -9,11 +9,13 @@
     "svgr": "svgr ./app/assets/svg -d ./app/components/icons --native --icon --svg-props width=24,height=24,className="
   },
   "dependencies": {
+    "@react-native-community/async-storage": "^1.12.1",
     "@react-native-community/eslint-config": "^2.0.0",
     "@react-native-community/masked-view": "0.1.10",
     "@react-navigation/bottom-tabs": "^5.11.2",
     "@react-navigation/native": "^5.8.10",
     "@react-navigation/stack": "^5.12.8",
+    "axios": "^0.21.1",
     "eslint": "^7.15.0",
     "expo": "~39.0.2",
     "expo-font": "~8.3.0",
@@ -30,6 +32,13 @@
     "react-native-screens": "~2.10.1",
     "react-native-svg": "^12.1.0",
     "react-native-web": "~0.13.12",
+    "react-redux": "^7.2.2",
+    "redux": "^4.0.5",
+    "redux-persist": "^6.0.0",
+    "redux-saga": "^1.1.3",
+    "redux-thunk": "^2.3.0",
+    "reduxsauce": "^1.2.0",
+    "seamless-immutable": "^7.1.4",
     "victory-native": "^35.3.1"
   },
   "devDependencies": {

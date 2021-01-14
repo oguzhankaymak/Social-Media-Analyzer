@@ -4,6 +4,11 @@ import * as Updates from 'expo-updates';
 import * as Font from 'expo-font';
 
 import Navigator from './app/navigation/NavigationStack';
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
+import configureStore from './app/redux/Store';
+
+const { persistor, store } = configureStore();
 
 export default function App() {
   const [fontLoaded, setFontLoaded] = useState(false);
@@ -37,8 +42,12 @@ export default function App() {
 
   if (!fontLoaded) return null;
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <Navigator />
-    </SafeAreaView>
+    <Provider store={store}>
+      <PersistGate persistor={persistor}>
+        <SafeAreaView style={{ flex: 1 }}>
+          <Navigator />
+        </SafeAreaView>
+      </PersistGate>
+    </Provider>
   );
 }
