@@ -55,23 +55,49 @@ const Login = ({ navigation }) => {
     }
   };
 
+  const onChangeEmail = (text) => {
+    if (!text?.includes(' ')) {
+      setemail(text);
+    }
+  };
+
+  const onChangePassword = (text) => {
+    if (!text?.includes(' ')) {
+      setpassword(text);
+    }
+  };
+
+  const _renderHeader = () => (
+    <View>
+      <View style={styles.header}>
+        <Text style={styles.title}>Tekrar Hoşgeldiniz !</Text>
+      </View>
+      <View style={styles.socialGirlIconView}>
+        <SocialGirl width={styles.socialGirlIcon.width} height={styles.socialGirlIcon.height} />
+      </View>
+    </View>
+  );
+
+  const _renderFooter = () => (
+    <TouchableOpacity style={styles.footer} onPress={() => navigation.goBack()} disabled={fetchingLogin}>
+      <Text style={styles.loginTextRegular}>Hesabınız yok mu ?</Text>
+      <Text style={styles.loginTextBold}> Kayıt Ol</Text>
+    </TouchableOpacity>
+  );
+
   return (
     <Layout>
       <View style={styles.form}>
         <KeyboardAwareScrollView enableOnAndroid={true} bounces={false}>
           <Circles />
-          <View style={styles.header}>
-            <Text style={styles.title}>Tekrar Hoşgeldiniz !</Text>
-          </View>
-          <View style={styles.socialGirlIconView}>
-            <SocialGirl width={styles.socialGirlIcon.width} height={styles.socialGirlIcon.height} />
-          </View>
+          {_renderHeader()}
           <View style={styles.inputStyles}>
             <TextInput
               placeholder={'Email Adresinizi Giriniz'}
               style={styles.textInputStyle}
               value={email}
-              onChangeText={setemail}
+              onChangeText={onChangeEmail}
+              autoCapitalize={'none'}
               keyboardType={'visible-password'}
             />
           </View>
@@ -81,7 +107,7 @@ const Login = ({ navigation }) => {
               placeholder={'Şifrenizi Giriniz'}
               style={styles.textInputStyle}
               value={password}
-              onChangeText={setpassword}
+              onChangeText={onChangePassword}
               secureTextEntry={true}
               autoCompleteType={'password'}
             />
@@ -96,10 +122,7 @@ const Login = ({ navigation }) => {
           </View>
         </KeyboardAwareScrollView>
       </View>
-      <TouchableOpacity style={styles.footer} onPress={() => navigation.goBack()} disabled={fetchingLogin}>
-        <Text style={styles.loginTextRegular}>Hesabınız yok mu ?</Text>
-        <Text style={styles.loginTextBold}> Kayıt Ol</Text>
-      </TouchableOpacity>
+      {_renderFooter()}
     </Layout>
   );
 };
