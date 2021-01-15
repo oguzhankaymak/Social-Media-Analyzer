@@ -45,9 +45,28 @@ const Login = ({ navigation }) => {
       setfetchingLogin(true);
       const response = await request.post('/account/login', { email: email, password: password });
       if (response?.status === 200 && response?.data) {
-        dispatch(UserActions.setUser(response?.data));
         setfetchingLogin(false);
+        if (response?.data?.success) {
+          return dispatch(UserActions.setUser(response?.data));
+        } else if (response?.data?.message?.length) {
+          return Alert.alert(
+            Messages.generalErrorTitle,
+            response?.data?.message,
+            [
+              {
+                text: Messages.okay,
+                onPress: () => {},
+              },
+            ],
+            {
+              cancelable: false,
+            },
+          );
+        }
+        return generalErrorMessage();
       }
+      setfetchingLogin(false);
+      return generalErrorMessage();
     } catch (error) {
       console.log(error, 'error on login');
       setfetchingLogin(false);
