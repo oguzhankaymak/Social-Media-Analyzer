@@ -11,8 +11,9 @@ import Circles from '../../../components/circles/Circles';
 import Button from '../../../components/button/Button';
 import request from '../../../utils/Request';
 import UserActions from '../../../redux/UserItemRedux';
-import { emailIsValid } from '../../../utils/Functions';
+import { emailIsValid, generalErrorMessage } from '../../../utils/Functions';
 import { Fonts } from '../../../theme';
+import Messages from '../../../utils/Messages';
 
 const Login = ({ navigation }) => {
   const passwordElementRef = useRef(null);
@@ -29,12 +30,11 @@ const Login = ({ navigation }) => {
   }, []);
 
   const loginValidation = () => {
-    setfetchingLogin(true);
     let errorMessage;
-    if (!email || !emailIsValid(email)) errorMessage = 'Lütfen geçerli bir email adresi giriniz.';
-    else if (!password || password.length < 4) errorMessage = 'Lütfen şifrenizi doğru giriniz.';
+    if (!email || !emailIsValid(email)) errorMessage = Messages.invalidEmail;
+    else if (!password || password.length < 4) errorMessage = Messages.invalidPassword;
     return errorMessage
-      ? Alert.alert('Lütfen Dikkat!', errorMessage, [{ text: 'Tamam', onPress: () => setfetchingLogin(false) }], {
+      ? Alert.alert(Messages.pleaseAttention, errorMessage, [{ text: Messages.okay, onPress: () => {} }], {
           cancelable: false,
         })
       : login();
@@ -42,23 +42,16 @@ const Login = ({ navigation }) => {
 
   const login = async () => {
     try {
+      setfetchingLogin(true);
       const response = await request.post('/account/login', { email: email, password: password });
-
       if (response?.status === 200 && response?.data) {
         dispatch(UserActions.setUser(response?.data));
         setfetchingLogin(false);
       }
     } catch (error) {
-      console.log('hata', error.response);
+      console.log(error, 'error on login');
       setfetchingLogin(false);
-      return Alert.alert(
-        'Maalesef İşleminiz Gerçekleştirilemedi!',
-        'Email adresiniz veya şifreniz yanlış.',
-        [{ text: 'Tamam', onPress: () => {} }],
-        {
-          cancelable: false,
-        },
-      );
+      return generalErrorMessage();
     }
   };
 
@@ -103,7 +96,7 @@ const Login = ({ navigation }) => {
           </View>
         </KeyboardAwareScrollView>
       </View>
-      <TouchableOpacity style={styles.footer} onPress={() => navigation.goBack()}>
+      <TouchableOpacity style={styles.footer} onPress={() => navigation.goBack()} disabled={fetchingLogin}>
         <Text style={styles.loginTextRegular}>Hesabınız yok mu ?</Text>
         <Text style={styles.loginTextBold}> Kayıt Ol</Text>
       </TouchableOpacity>
