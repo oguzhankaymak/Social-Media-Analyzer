@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { View, Text, Image, TouchableOpacity, TextInput, Alert } from 'react-native';
+import { View, Text, Image, TouchableOpacity, TextInput, Alert, ActivityIndicator } from 'react-native';
 
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useDispatch } from 'react-redux';
@@ -8,74 +8,152 @@ import styles from './styles/Styles';
 import Layout from '../../../components/layout/Layout';
 import { EditIcon, CloseIcon } from '../../../components/icons';
 import Button from '../../../components/button/Button';
-import { Fonts } from '../../../theme';
+import { Fonts, GlobalStyles } from '../../../theme';
+import request from '../../../utils/Request';
 import UserActions from '../../../redux/UserItemRedux';
+import { emailIsValid, generalErrorMessage } from '../../../utils/Functions';
+import Messages from '../../../utils/Messages';
 
 const Account = () => {
   const dispatch = useDispatch();
 
-  const initialState = {
-    nameSurname: 'Oğuzhan Kaymak',
-    email: 'oguzhankaymakdev@gmail.com',
-    password: '123456789',
-  };
   const [editable, seteditable] = useState(false);
-  const [nameSurname, setnameSurname] = useState(initialState.nameSurname);
-  const [email, setemail] = useState(initialState.email);
-  const [password, setpassword] = useState(initialState.password);
-  const [fetching, setFetching] = useState(false);
+  const [initialState, setinitialState] = useState({ firstname: '', surname: '', email: '', profilePhoto: '' });
+  const [nameSurname, setnameSurname] = useState('');
+  const [email, setemail] = useState('');
+  const [password, setpassword] = useState('');
+  const [fetchingScreen, setfetchingScreen] = useState(false);
+  const [fetchingUpdate, setfetchingUpdate] = useState(false);
+  const [fetchingLogout, setfetchingLogout] = useState(false);
 
   const inputElementRef = useRef(null);
 
   useEffect(() => {
+    getUserInfo();
     inputElementRef.current.setNativeProps({
       style: { fontFamily: Fonts.type.PoppinsRegular },
     });
   }, []);
 
   const updateValidation = () => {
-    setFetching(true);
     let errorMessage;
-    if (initialState.nameSurname === nameSurname && initialState.email === email)
-      errorMessage = 'Değişiklik gerçekleştirmediniz';
-    else if (!nameSurname || nameSurname.length < 4) errorMessage = 'Lütfen geçerli ad soyad giriniz';
-    else if (!email || email.length < 5 || !email.includes('@'))
-      errorMessage = 'Lütfen geçerli bir email adresi giriniz.';
-    else if (!password || password.length < 4) errorMessage = 'Lütfen şifrenizi doğru giriniz.';
+    if (initialState?.firstname + ' ' + initialState?.surname === nameSurname && initialState?.email === email)
+      errorMessage = Messages.noChanges;
+    else if (!nameSurname || nameSurname.length < 4 || !nameSurname.includes(' '))
+      errorMessage = Messages.invalidNameSurname;
+    else if (!email || !emailIsValid(email)) errorMessage = Messages.invalidEmail;
+    else if (!password || password.length < 4) errorMessage = Messages.invalidPassword;
     return errorMessage
-      ? Alert.alert('Lütfen Dikkat!', errorMessage, [{ text: 'Tamam', onPress: () => setFetching(false) }], {
+      ? Alert.alert(Messages.pleaseAttention, errorMessage, [{ text: Messages.okay, onPress: () => {} }], {
           cancelable: false,
         })
       : update();
   };
 
-  const update = () => {
-    seteditable(false);
-    setTimeout(() => {
-      console.log('update');
-      setFetching(false);
-    }, 5000);
+  const update = async () => {
+    try {
+      setfetchingUpdate(true);
+      let nameSurnameArray = nameSurname?.split(' ');
+      const response = await request.post('/api/personal-info/edit', {
+        firstname: nameSurnameArray[0],
+        surname: nameSurnameArray[1],
+        email: email,
+        password: password,
+      });
+
+      if (response.status === 200 && response?.data) {
+        setfetchingUpdate(false);
+        setpassword('');
+        if (response?.data?.success) {
+          await getUserInfo();
+          seteditable(false);
+          return Alert.alert(
+            Messages.success,
+            Messages.successfullyChanged,
+            [{ text: Messages.okay, onPress: () => {} }],
+            {
+              cancelable: false,
+            },
+          );
+        } else if (response?.data?.message?.length) {
+          return Alert.alert(
+            Messages.generalErrorTitle,
+            response?.data?.message,
+            [
+              {
+                text: Messages.okay,
+                onPress: () => {},
+              },
+            ],
+            {
+              cancelable: false,
+            },
+          );
+        }
+        return generalErrorMessage();
+      }
+      setpassword('');
+      setfetchingUpdate(false);
+      return generalErrorMessage();
+    } catch (error) {
+      setpassword('');
+      setfetchingUpdate(false);
+      return generalErrorMessage();
+    }
+  };
+
+  const getUserInfo = async () => {
+    try {
+      setfetchingScreen(true);
+      const response = await request.get('/api/personal-info/');
+      if (response.status === 200 && response?.data) {
+        setfetchingScreen(false);
+        if (response?.data?.success) {
+          setinitialState(response?.data?.userInfo);
+          setnameSurname(response?.data?.userInfo?.firstname + ' ' + response?.data?.userInfo?.surname);
+          return setemail(response?.data?.userInfo?.email);
+        }
+        return generalErrorMessage();
+      }
+      generalErrorMessage();
+      return setfetchingScreen(false);
+    } catch (error) {
+      generalErrorMessage();
+      return setfetchingScreen(false);
+    }
   };
 
   const logout = () => {
     try {
-      setFetching(true);
+      setfetchingLogout(true);
       dispatch(UserActions.resetUser());
-      setFetching(false);
+      setfetchingLogout(false);
     } catch (error) {
-      console.log(error, 'error on logout');
+      setfetchingLogout(false);
+      generalErrorMessage();
     }
   };
+
+  if (fetchingScreen) {
+    return (
+      <Layout>
+        <View style={GlobalStyles.fCenter}>
+          <ActivityIndicator size={'large'} color={'white'} />
+        </View>
+      </Layout>
+    );
+  }
+
   return (
     <Layout>
       <View style={styles.header}>
         <View style={styles.icons}>
           {editable ? (
-            <TouchableOpacity onPress={() => seteditable(false)} disabled={fetching}>
+            <TouchableOpacity onPress={() => seteditable(false)} disabled={fetchingUpdate}>
               <CloseIcon width={24} height={24} color={'white'} />
             </TouchableOpacity>
           ) : (
-            <TouchableOpacity onPress={() => seteditable(true)} disabled={fetching}>
+            <TouchableOpacity onPress={() => seteditable(true)} disabled={fetchingUpdate}>
               <EditIcon width={24} height={24} color={'white'} />
             </TouchableOpacity>
           )}
@@ -84,7 +162,7 @@ const Account = () => {
           <Image source={require('../../../assets/img/avatar.png')} style={styles.image} />
         </View>
         <View style={styles.titleView}>
-          <Text style={styles.title}>Hoşgeldin Oğuzhan Kaymak</Text>
+          <Text style={styles.title}>Hoşgeldin {initialState?.firstname + ' ' + initialState?.surname}</Text>
         </View>
       </View>
       <View style={styles.form}>
@@ -128,16 +206,16 @@ const Account = () => {
           <Button
             title={'Kaydet'}
             colorName={'save'}
-            fetching={fetching}
-            disabled={fetching}
+            fetching={fetchingUpdate}
+            disabled={fetchingUpdate}
             onPressBtn={updateValidation}
           />
         ) : (
           <Button
             title={'Çıkış Yap'}
             colorName={'logout'}
-            fetching={fetching}
-            disabled={fetching}
+            fetching={fetchingLogout}
+            disabled={fetchingLogout}
             onPressBtn={logout}
           />
         )}
