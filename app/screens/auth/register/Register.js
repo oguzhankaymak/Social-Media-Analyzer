@@ -39,7 +39,8 @@ const Register = ({ navigation }) => {
 
   const registerValidation = () => {
     let errorMessage;
-    if (!nameSurname || nameSurname.length < 4 || !nameSurname.includes(' ')) errorMessage = Messages.nameSurnameIsNull;
+    if (!nameSurname || nameSurname.length < 4 || !nameSurname.includes(' '))
+      errorMessage = Messages.invalidNameSurname;
     else if (!email || !emailIsValid(email)) errorMessage = Messages.invalidEmail;
     else if (!password || password.length < 4) errorMessage = Messages.invalidPassword;
     else if (!passwordConfrim || passwordConfrim.length < 4 || password !== passwordConfrim)

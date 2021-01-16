@@ -8,8 +8,12 @@ export default {
 
   //login - register
   registerSuccess: 'Kayıt olma işlemini başarılı bir şekilde gerçekleştirdiniz. Giriş yapabilirsiniz.',
-  nameSurnameIsNull: 'Lütfen geçerli ad soyad giriniz.',
+  invalidNameSurname: 'Lütfen geçerli ad soyad giriniz.',
   invalidEmail: 'Lütfen geçerli bir email adresi giriniz.',
   invalidPassword: 'Lütfen şifrenizi doğru giriniz.',
   invalidPasswordConfrim: 'Lütfen şifre doğrulamanızı doğru giriniz.',
+
+  //account
+  noChanges: 'Değişiklik gerçekleştirmediniz.',
+  successfullyChanged: 'Bilgileriniz başarılı bir şekilde güncellenmiştir.',
 };
