@@ -2,20 +2,21 @@ import React, { useState, useEffect, useRef } from 'react';
 import { View, Text, Image, TouchableOpacity, TextInput, Alert, ActivityIndicator } from 'react-native';
 
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import styles from './styles/Styles';
 import Layout from '../../../components/layout/Layout';
 import { EditIcon, CloseIcon } from '../../../components/icons';
 import Button from '../../../components/button/Button';
 import { Fonts, GlobalStyles } from '../../../theme';
-import request from '../../../utils/Request';
+import { request } from '../../../utils/Request';
 import UserActions from '../../../redux/UserItemRedux';
 import { emailIsValid, generalErrorMessage } from '../../../utils/Functions';
 import Messages from '../../../utils/Messages';
 
 const Account = () => {
   const dispatch = useDispatch();
+  const user = useSelector((state) => state.userItem);
 
   const [editable, seteditable] = useState(false);
   const [initialState, setinitialState] = useState({ firstname: '', surname: '', email: '', profilePhoto: '' });
@@ -29,7 +30,10 @@ const Account = () => {
   const inputElementRef = useRef(null);
 
   useEffect(() => {
-    getUserInfo();
+    if (user?.token) {
+      getUserInfo();
+    }
+
     inputElementRef.current.setNativeProps({
       style: { fontFamily: Fonts.type.PoppinsRegular },
     });
@@ -65,7 +69,7 @@ const Account = () => {
         setfetchingUpdate(false);
         setpassword('');
         if (response?.data?.success) {
-          await getUserInfo();
+          await getUserInfo(true);
           seteditable(false);
           return Alert.alert(
             Messages.success,
@@ -102,19 +106,25 @@ const Account = () => {
     }
   };
 
-  const getUserInfo = async () => {
+  const getUserInfo = async (userUpdate = false) => {
     try {
       setfetchingScreen(true);
       const response = await request.get('/api/personal-info/');
       if (response.status === 200 && response?.data) {
-        setfetchingScreen(false);
         if (response?.data?.success) {
-          setinitialState(response?.data?.userInfo);
-          setnameSurname(response?.data?.userInfo?.firstname + ' ' + response?.data?.userInfo?.surname);
+          let userInfo = response?.data?.userInfo;
+          setinitialState(userInfo);
+          setnameSurname(userInfo?.firstname + ' ' + userInfo?.surname);
+          if (userUpdate) {
+            dispatch(UserActions.setUser({ firstname: userInfo?.firstname, surname: userInfo?.surname }));
+          }
+          setfetchingScreen(false);
           return setemail(response?.data?.userInfo?.email);
         }
+        setfetchingScreen(false);
         return generalErrorMessage();
       }
+      setfetchingScreen(false);
       generalErrorMessage();
       return setfetchingScreen(false);
     } catch (error) {
@@ -127,6 +137,7 @@ const Account = () => {
     try {
       setfetchingLogout(true);
       dispatch(UserActions.resetUser());
+      dispatch(UserActions.resetToken());
       setfetchingLogout(false);
     } catch (error) {
       setfetchingLogout(false);
