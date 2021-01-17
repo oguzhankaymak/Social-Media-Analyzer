@@ -10,12 +10,12 @@ import AppBottomTabNavigator from './AppBottomTabNavigator';
 import AuthNavigator from './AuthStack';
 
 const NavigationStack = () => {
-  const user = useSelector((state) => state.userItem.user.success);
+  const user = useSelector((state) => state.userItem);
 
   return (
     <NavigationContainer>
       <Stack.Navigator headerMode="none">
-        {user ? (
+        {user?.token && user?.user?.firstname && user?.user?.surname ? (
           <Stack.Screen name="appBottomTabNavigator" component={AppBottomTabNavigator} />
         ) : (
           <Stack.Screen name="authNavigator" component={AuthNavigator} />
