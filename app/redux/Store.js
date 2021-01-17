@@ -6,15 +6,19 @@ import AsyncStorage from '@react-native-community/async-storage';
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
+  blacklist: ['setups'],
+  debug: true,
 };
 
 const combinedReducers = persistCombineReducers(persistConfig, {
   userItem: require('./UserItemRedux').reducer,
 });
 
-export default function configureStore(initialState = {}) {
-  let store = createStore(combinedReducers, initialState, applyMiddleware(thunk));
+let store = createStore(combinedReducers, undefined, applyMiddleware(thunk));
+let persistor = persistStore(store);
 
-  let persistor = persistStore(store);
-  return { store, persistor };
-}
+const configureStore = () => {
+  return { persistor, store };
+};
+
+export default configureStore;

@@ -3,9 +3,8 @@ import Immutable from 'seamless-immutable';
 
 //State
 export const INITIAL_STATE = Immutable({
+  token: null,
   user: {
-    success: null,
-    token: null,
     firstname: null,
     surname: null,
   },
@@ -13,6 +12,8 @@ export const INITIAL_STATE = Immutable({
 
 //Types and creators
 const { Types, Creators } = createActions({
+  setToken: ['token'],
+  resetToken: null,
   setUser: ['user'],
   resetUser: null,
 });
@@ -32,15 +33,29 @@ export const resetUser = (state, action) => {
   return {
     ...state,
     user: {
-      success: null,
-      token: null,
       firstname: null,
       surname: null,
     },
   };
 };
 
+export const setToken = (state, action) => {
+  return {
+    ...state,
+    token: action.token,
+  };
+};
+
+export const resetToken = (state, action) => {
+  return {
+    ...state,
+    token: null,
+  };
+};
+
 export const reducer = createReducer(INITIAL_STATE, {
   [Types.SET_USER]: setUser,
   [Types.RESET_USER]: resetUser,
+  [Types.SET_TOKEN]: setToken,
+  [Types.RESET_TOKEN]: resetToken,
 });

@@ -9,7 +9,7 @@ import styles from './styles/Styles';
 import { SocialGirl } from '../../../components/icons';
 import Circles from '../../../components/circles/Circles';
 import Button from '../../../components/button/Button';
-import request from '../../../utils/Request';
+import { tokenlessRequest } from '../../../utils/Request';
 import UserActions from '../../../redux/UserItemRedux';
 import { emailIsValid, generalErrorMessage } from '../../../utils/Functions';
 import { Fonts } from '../../../theme';
@@ -43,12 +43,13 @@ const Login = ({ navigation }) => {
   const login = async () => {
     try {
       setfetchingLogin(true);
-      const response = await request.post('/account/login', { email: email, password: password });
+      const response = await tokenlessRequest.post('/account/login', { email: email, password: password });
       if (response?.status === 200 && response?.data) {
-        setfetchingLogin(false);
         if (response?.data?.success) {
-          return dispatch(UserActions.setUser(response?.data));
+          dispatch(UserActions.setToken(response?.data?.token));
+          return await getNameSurnameUser(response?.data?.token);
         } else if (response?.data?.message?.length) {
+          setfetchingLogin(false);
           return Alert.alert(
             Messages.generalErrorTitle,
             response?.data?.message,
@@ -63,6 +64,7 @@ const Login = ({ navigation }) => {
             },
           );
         }
+        setfetchingLogin(false);
         return generalErrorMessage();
       }
       setfetchingLogin(false);
@@ -72,6 +74,34 @@ const Login = ({ navigation }) => {
       setfetchingLogin(false);
       return generalErrorMessage();
     }
+  };
+
+  const getNameSurnameUser = async (token) => {
+    if (token) {
+      try {
+        const response = await tokenlessRequest.get('/api/personal-info/nameSurname', {
+          headers: {
+            Authorization: token,
+          },
+        });
+        if (response.status === 200 && response?.data) {
+          setfetchingLogin(false);
+          if (response?.data?.success) {
+            return dispatch(
+              UserActions.setUser({ firstname: response?.data?.firstname, surname: response?.data?.surname }),
+            );
+          }
+          return generalErrorMessage();
+        }
+        setfetchingLogin(false);
+        return generalErrorMessage();
+      } catch (error) {
+        setfetchingLogin(false);
+        return generalErrorMessage();
+      }
+    }
+    setfetchingLogin(false);
+    return generalErrorMessage();
   };
 
   const onChangeEmail = (text) => {

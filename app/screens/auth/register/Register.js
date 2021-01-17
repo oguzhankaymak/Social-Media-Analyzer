@@ -8,7 +8,7 @@ import Circles from '../../../components/circles/Circles';
 import Button from '../../../components/button/Button';
 import { Fonts } from '../../../theme';
 import { emailIsValid, generalErrorMessage } from '../../../utils/Functions';
-import request from '../../../utils/Request';
+import { tokenlessRequest } from '../../../utils/Request';
 import Messages from '../../../utils/Messages';
 
 const Register = ({ navigation }) => {
@@ -62,7 +62,7 @@ const Register = ({ navigation }) => {
         email: email,
         password: password,
       };
-      const response = await request.post('/account/register', params);
+      const response = await tokenlessRequest.post('/account/register', params);
       if (response?.status === 200 && response?.data) {
         setfetchingRegister(false);
         if (response?.data?.success) {
