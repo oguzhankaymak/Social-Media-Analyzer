@@ -5,17 +5,14 @@ import Layout from '../../../components/layout/Layout';
 import RoundCard from '../../../components/roundCard/RoundCard';
 import HomeDescriptionCard from '../../../components/homeDescriptionCard/HomeDescriptionCard';
 import styles from './styles/Styles';
-import { useSelector } from 'react-redux';
 
 const Home = ({ navigation }) => {
-  const user = useSelector((state) => state.userItem.user);
-
   return (
     <Layout>
       <View style={styles.header}>
         <View>
           <Text style={styles.welcomeText}>Hoşgeldin,</Text>
-          <Text style={styles.nameText}>{user?.firstname}!</Text>
+          <Text style={styles.nameText}>Oğuzhan!</Text>
         </View>
         <Image style={styles.socialAnnouncementGif} source={require('../../../assets/gifs/socialAnnouncement.webp')} />
       </View>
