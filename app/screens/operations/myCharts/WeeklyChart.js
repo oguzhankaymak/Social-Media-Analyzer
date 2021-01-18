@@ -9,7 +9,8 @@ import { GlobalStyles } from '../../../theme';
 import ChartInfoCard from '../../../components/chartInfoCard/ChartInfoCard';
 import ChartContentCard from '../../../components/chartContentCard/ChartContentCard';
 import { widthPercentageToDP as wp } from '../../../utils/PercentageCalculator';
-import { ChartMock } from '../../../mock';
+import { request } from '../../../utils/Request';
+import { generalErrorMessage } from '../../../utils/Functions';
 
 const WeeklyChart = () => {
   const [weeklyCardData, setweeklyCardData] = useState(null);
@@ -20,23 +21,37 @@ const WeeklyChart = () => {
     getWeeklyData();
   }, []);
 
-  const getWeeklyData = () => {
-    setTimeout(() => {
+  const getWeeklyData = async () => {
+    try {
       setfetchingData(true);
-      setweeklyCardData(ChartMock.statisticsByWeeks);
-      let chartData = [];
-      let value;
-      for (let i = 0; i < ChartMock.statisticsByWeeks.length; i++) {
-        value = {};
-        value.x = ChartMock.statisticsByWeeks[i].x.split(' ')[1];
-        value.y = ChartMock.statisticsByWeeks[i].y;
-        chartData.push(value);
+      const response = await request.get('/api/stats/weekly-stats');
+      if (response.status === 200 && response?.data) {
+        if (response?.data?.success) {
+          const { weeklyInstagramStats } = response?.data;
+          setweeklyCardData(weeklyInstagramStats);
+          let chartData = [];
+          let splitData;
+          let value;
+          for (let i = 0; i < weeklyInstagramStats.length; i++) {
+            value = {};
+            splitData = weeklyInstagramStats[i].date.split(' ');
+            value.x = splitData[splitData.length - 1];
+            value.y = weeklyInstagramStats[i].followerCount;
+            chartData.push(value);
+          }
+          setweeklyChartData(chartData);
+          return setfetchingData(false);
+        }
+        setfetchingData(false);
+        return generalErrorMessage();
       }
-      setweeklyChartData(chartData);
       setfetchingData(false);
-    }, 1000);
+      return generalErrorMessage();
+    } catch (error) {
+      setfetchingData(false);
+      return generalErrorMessage();
+    }
   };
-
   const _renderChart = () => (
     <VictoryChart theme={VictoryTheme.material} domainPadding={10}>
       <VictoryAxis style={{ axis: { stroke: 'white' } }} />
@@ -74,7 +89,7 @@ const WeeklyChart = () => {
           {weeklyCardData &&
             weeklyCardData.map((element, index) => (
               <View style={styles.contentCard} key={String(index)}>
-                <ChartContentCard data={element.y} datetime={element.x} />
+                <ChartContentCard data={element.followerCount} datetime={element.date} />
               </View>
             ))}
         </View>
