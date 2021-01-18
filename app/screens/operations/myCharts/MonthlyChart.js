@@ -9,6 +9,8 @@ import { GlobalStyles } from '../../../theme';
 import ChartInfoCard from '../../../components/chartInfoCard/ChartInfoCard';
 import ChartContentCard from '../../../components/chartContentCard/ChartContentCard';
 import { ChartMock } from '../../../mock';
+import { request } from '../../../utils/Request';
+import { generalErrorMessage } from '../../../utils/Functions';
 
 const DailyChart = () => {
   const [monthlyCardData, setmonthlyCardData] = useState(null);
@@ -35,13 +37,34 @@ const DailyChart = () => {
     getMonthlyData();
   }, []);
 
-  const getMonthlyData = () => {
-    setTimeout(() => {
+  const getMonthlyData = async () => {
+    try {
       setfetchingData(true);
-      setmonthlyCardData(ChartMock.statisticsByMonth);
-      setmonthlyChartData(ChartMock.statisticsByMonth);
+      const response = await request.get('/api/stats/monthly-stats');
+      if (response.status === 200 && response?.data) {
+        if (response?.data?.success) {
+          const { monthlyInstagramStats } = response?.data;
+          setmonthlyCardData(monthlyInstagramStats);
+          let chartData = [];
+          let value;
+          for (let i = 0; i < monthlyInstagramStats.length; i++) {
+            value = {};
+            value.x = monthlyInstagramStats[i].week;
+            value.y = monthlyInstagramStats[i].followerCount;
+            chartData.push(value);
+          }
+          setmonthlyChartData(chartData);
+          return setfetchingData(false);
+        }
+        setfetchingData(false);
+        return generalErrorMessage();
+      }
       setfetchingData(false);
-    }, 1000);
+      return generalErrorMessage();
+    } catch (error) {
+      setfetchingData(false);
+      return generalErrorMessage();
+    }
   };
 
   const renderChart = () => {
@@ -77,7 +100,10 @@ const DailyChart = () => {
           {monthlyCardData &&
             monthlyCardData.map((element, index) => (
               <View style={styles.contentCard} key={String(index)}>
-                <ChartContentCard data={element.y} datetime={`${months[currentMonth]} ayı  ` + element.x} />
+                <ChartContentCard
+                  data={element.followerCount}
+                  datetime={`${months[currentMonth]} ayı  ` + element.week}
+                />
               </View>
             ))}
         </View>
