@@ -8,7 +8,8 @@ import styles from './styles/DailyChartStyle';
 import { GlobalStyles } from '../../../theme';
 import ChartInfoCard from '../../../components/chartInfoCard/ChartInfoCard';
 import ChartContentCard from '../../../components/chartContentCard/ChartContentCard';
-import { ChartMock } from '../../../mock';
+import { request } from '../../../utils/Request';
+import { generalErrorMessage } from '../../../utils/Functions';
 
 const DailyChart = () => {
   const [dailyCardData, setdailyCardData] = useState(null);
@@ -19,21 +20,36 @@ const DailyChart = () => {
     getDailyData();
   }, []);
 
-  const getDailyData = () => {
-    setTimeout(() => {
+  const getDailyData = async () => {
+    try {
       setfetchingData(true);
-      setdailyCardData(ChartMock.statisticsByDay);
-      let chartData = [];
-      let value;
-      for (let i = 0; i < ChartMock.statisticsByDay.length; i++) {
-        value = {};
-        value.x = ChartMock.statisticsByDay[i].x.split('  ')[1];
-        value.y = ChartMock.statisticsByDay[i].y;
-        chartData.push(value);
+      const response = await request.get('/api/stats/daily-stats');
+      if (response.status === 200 && response?.data) {
+        if (response?.data?.success) {
+          const { dailyInstagramStats } = response?.data;
+          setdailyCardData(dailyInstagramStats);
+          let chartData = [];
+          let splitData;
+          let value;
+          for (let i = 0; i < dailyInstagramStats.length; i++) {
+            value = {};
+            splitData = dailyInstagramStats[i].date.split(' ');
+            value.x = splitData[0] + ' ' + splitData[1] + ' ' + splitData[2];
+            value.y = dailyInstagramStats[i].followerCount;
+            chartData.push(value);
+          }
+          setdailyChartData(chartData);
+          return setfetchingData(false);
+        }
+        setfetchingData(false);
+        return generalErrorMessage();
       }
-      setdailyChartData(chartData);
       setfetchingData(false);
-    }, 1000);
+      return generalErrorMessage();
+    } catch (error) {
+      setfetchingData(false);
+      return generalErrorMessage();
+    }
   };
 
   const renderChart = () => {
@@ -76,7 +92,7 @@ const DailyChart = () => {
           {dailyCardData &&
             dailyCardData.map((element, index) => (
               <View style={styles.contentCard} key={String(index)}>
-                <ChartContentCard data={element.y} datetime={element.x} />
+                <ChartContentCard data={element.followerCount} datetime={element.date} />
               </View>
             ))}
         </View>
