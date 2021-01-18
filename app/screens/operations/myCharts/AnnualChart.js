@@ -8,7 +8,8 @@ import styles from './styles/AnnualChartStyle';
 import { GlobalStyles } from '../../../theme';
 import ChartInfoCard from '../../../components/chartInfoCard/ChartInfoCard';
 import ChartContentCard from '../../../components/chartContentCard/ChartContentCard';
-import { ChartMock } from '../../../mock';
+import { request } from '../../../utils/Request';
+import { generalErrorMessage } from '../../../utils/Functions';
 
 const AnnualChart = () => {
   const [annualCardData, setannualCardData] = useState(null);
@@ -36,30 +37,43 @@ const AnnualChart = () => {
     getAnnualChartData();
   }, []);
 
-  const getAnnualChartData = () => {
-    setTimeout(() => {
+  const getAnnualChartData = async () => {
+    try {
       setfetchingData(true);
-      let chartData = [],
-        cardData = [],
-        value,
-        split;
+      const response = await request.get('/api/stats/yearly-stats');
+      if (response.status === 200 && response?.data) {
+        if (response?.data?.success) {
+          const { yearlyInstagramStats } = response?.data;
+          let chartData = [],
+            cardData = [],
+            value,
+            split;
 
-      for (let i = 0; i < ChartMock.statisticsByYear.length; i++) {
-        value = {};
-        split = ChartMock.statisticsByYear[i].x.split(' ');
-        value.x = shortMonths[split[0] - 1];
-        value.y = ChartMock.statisticsByYear[i].y;
-        chartData.push(value);
+          for (let i = 0; i < yearlyInstagramStats.length; i++) {
+            value = {};
+            split = yearlyInstagramStats[i].date.split(' ');
+            value.x = shortMonths[split[0] - 1];
+            value.y = yearlyInstagramStats[i].followerCount;
+            chartData.push(value);
 
-        value = {};
-        value.x = split[1] + ' ' + months[split[0] - 1];
-        value.y = ChartMock.statisticsByYear[i].y;
-        cardData.push(value);
+            value = {};
+            value.x = split[1] + ' ' + months[split[0] - 1];
+            value.y = yearlyInstagramStats[i].followerCount;
+            cardData.push(value);
+          }
+          setannualCardData(cardData);
+          setannualChartData(chartData);
+          return setfetchingData(false);
+        }
+        setfetchingData(false);
+        return generalErrorMessage();
       }
-      setannualCardData(cardData);
-      setannualChartData(chartData);
       setfetchingData(false);
-    }, 1000);
+      return generalErrorMessage();
+    } catch (error) {
+      setfetchingData(false);
+      return generalErrorMessage();
+    }
   };
 
   const renderChart = () => {
