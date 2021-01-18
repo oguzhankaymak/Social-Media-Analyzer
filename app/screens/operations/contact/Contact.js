@@ -6,6 +6,9 @@ import Layout from '../../../components/layout/Layout';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Button from '../../../components/button/Button';
 import { ContactIcon } from '../../../components/icons';
+import Messages from '../../../utils/Messages';
+import { request } from '../../../utils/Request';
+import { generalErrorMessage } from '../../../utils/Functions';
 
 const Contact = ({ navigation }) => {
   const [subject, setsubject] = useState('');
@@ -13,32 +16,61 @@ const Contact = ({ navigation }) => {
   const [fetchingSendMessage, setfetchingSendMessage] = useState(false);
 
   const sendValidation = () => {
-    setfetchingSendMessage(true);
     let errorMessage;
-    if (!subject || subject.length < 3) errorMessage = 'Lütfen uygun bir konu girin.';
-    else if (!description || description.length < 5) errorMessage = 'Lütfen açıklamanızı girin veya detaylandırın.';
+    if (!subject || subject.length < 3) errorMessage = Messages.invalidSubject;
+    else if (!description || description.length < 5) errorMessage = Messages.invalidDescription;
     return errorMessage
-      ? Alert.alert('Lütfen Dikkat!', errorMessage, [{ text: 'Tamam', onPress: () => setfetchingSendMessage(false) }], {
+      ? Alert.alert(Messages.pleaseAttention, errorMessage, [{ text: Messages.okay, onPress: () => {} }], {
           cancelable: false,
         })
       : send();
   };
-  const send = () => {
-    setTimeout(() => {
-      console.log('send');
-      setsubject('');
-      setdescription('');
-      Alert.alert(
-        'Bizimle İletişime Geçtiğiniz İçin Teşekkür Ederiz!',
-        'En kısa zamanda dönüş yapılacaktır.',
-        [{ text: 'Tamam' }],
-        {
-          cancelable: false,
-        },
-      );
+
+  const resetData = () => {
+    setsubject('');
+    setdescription('');
+  };
+
+  const send = async () => {
+    try {
+      setfetchingSendMessage(true);
+      const response = await request.post('/api/feedback/add', { topic: subject, message: description });
+      if (response?.status === 200 && response?.data) {
+        setfetchingSendMessage(false);
+        if (response?.data?.success) {
+          resetData();
+          return Alert.alert(
+            Messages.successfullyContactTitle,
+            Messages.successfullyContactDescription,
+            [{ text: Messages.okay }],
+            {
+              cancelable: false,
+            },
+          );
+        } else if (response?.data?.message?.length) {
+          return Alert.alert(
+            Messages.generalErrorTitle,
+            response?.data?.message,
+            [
+              {
+                text: Messages.okay,
+                onPress: () => {},
+              },
+            ],
+            {
+              cancelable: false,
+            },
+          );
+        }
+        setfetchingSendMessage(false);
+        return generalErrorMessage();
+      }
       setfetchingSendMessage(false);
-    }, 3000);
-    console.log('send');
+      return generalErrorMessage();
+    } catch (error) {
+      setfetchingSendMessage(false);
+      return generalErrorMessage();
+    }
   };
 
   return (
@@ -60,6 +92,7 @@ const Contact = ({ navigation }) => {
               value={subject}
               onChangeText={setsubject}
               keyboardType={'visible-password'}
+              editable={!fetchingSendMessage}
             />
           </View>
           <View style={styles.inputStyles}>
@@ -70,6 +103,7 @@ const Contact = ({ navigation }) => {
               onChangeText={setdescription}
               keyboardType={'visible-password'}
               multiline={true}
+              editable={!fetchingSendMessage}
             />
           </View>
         </KeyboardAwareScrollView>
