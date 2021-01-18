@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
-import { Fonts, Colors, Metrics } from '../../../theme';
-import { widthPercentageToDP as wp, heightPercentageToDP as hp } from '../../../utils/PercentageCalculator';
+import { Fonts, Colors } from '../../../theme';
+import { widthPercentageToDP as wp } from '../../../utils/PercentageCalculator';
 
 export default StyleSheet.create({
   flatlistCard: {

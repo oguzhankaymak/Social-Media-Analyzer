@@ -6,8 +6,6 @@ import AsyncStorage from '@react-native-community/async-storage';
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
-  blacklist: ['setups'],
-  debug: true,
 };
 
 const combinedReducers = persistCombineReducers(persistConfig, {

@@ -16,4 +16,10 @@ export default {
   //account
   noChanges: 'Değişiklik gerçekleştirmediniz.',
   successfullyChanged: 'Bilgileriniz başarılı bir şekilde güncellenmiştir.',
+  galleryPermission: 'Profil fotoğrafınızı yükleyebilmeniz için izin vermelisiniz.',
+  tryAgain: 'Tekar Dene',
+  changesWillBeLost: 'Değişiklikleriniz kaybolacaktır.',
+  renounce: 'Vazgeç',
+  photoSizeError:
+    'Lütfen daha düşük boyutlu fotoğraf seçiniz. Ya da fotoğrafınızı seçerken yüksekliğini ve genişliğini düşürebilirsiniz.',
 };

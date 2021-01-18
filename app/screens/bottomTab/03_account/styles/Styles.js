@@ -14,14 +14,35 @@ export default StyleSheet.create({
   },
 
   profile: {
-    marginTop: hp('6%'),
+    marginTop: 30,
     alignItems: 'center',
+  },
+
+  photo: {
+    width: hp('13%'),
+    height: hp('13%'),
+    borderRadius: hp('13%') / 2,
+    borderWidth: 1,
+    borderColor: 'white',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 
   image: {
     width: hp('13%'),
     height: hp('13%'),
     borderRadius: hp('13%') / 2,
+  },
+
+  photoOperation: {
+    flexDirection: 'row',
+  },
+
+  line: {
+    backgroundColor: Colors.white,
+    height: 20,
+    width: 1,
+    marginHorizontal: 10,
   },
 
   titleView: {
