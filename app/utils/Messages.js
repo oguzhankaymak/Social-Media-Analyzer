@@ -22,4 +22,11 @@ export default {
   renounce: 'Vazgeç',
   photoSizeError:
     'Lütfen daha düşük boyutlu fotoğraf seçiniz. Ya da fotoğrafınızı seçerken yüksekliğini ve genişliğini düşürebilirsiniz.',
+
+  //contact
+  invalidSubject: 'Lütfen uygun bir konu girin.',
+  invalidDescription: 'Lütfen açıklamanızı girin veya detaylandırın.',
+  successfullyContactTitle: 'Bizimle İletişime Geçtiğiniz İçin Teşekkür Ederiz!',
+  successfullyContactDescription: 'En kısa zamanda dönüş yapılacaktır.',
+  invalidLengthPassword: 'Şifreniz en az 4 karakterden oluşabilir.',
 };

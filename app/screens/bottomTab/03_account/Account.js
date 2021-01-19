@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import styles from './styles/Styles';
 import Layout from '../../../components/layout/Layout';
-import { EditIcon, CloseIcon, UserIcon, UploadIcon, DeleteIcon } from '../../../components/icons';
+import { EditIcon, CloseIcon, UserIcon, UploadIcon, DeleteIcon, KeyIcon } from '../../../components/icons';
 import Button from '../../../components/button/Button';
 import { Fonts, GlobalStyles } from '../../../theme';
 import { request } from '../../../utils/Request';
@@ -16,6 +16,7 @@ import Messages from '../../../utils/Messages';
 import { Colors } from '../../../theme';
 import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
+import PasswordChangeModal from '../../../components/passwordChangeModal/PasswordChangeModal';
 
 const Account = () => {
   const dispatch = useDispatch();
@@ -30,6 +31,8 @@ const Account = () => {
   const [fetchingScreen, setfetchingScreen] = useState(false);
   const [fetchingUpdate, setfetchingUpdate] = useState(false);
   const [fetchingLogout, setfetchingLogout] = useState(false);
+  const [fetchingPasswordChange, setfetchingPasswordChange] = useState(false);
+  const [showPasswordChangeModal, setShowPasswordChangeModal] = useState(false);
 
   const inputElementRef = useRef(null);
 
@@ -298,12 +301,70 @@ const Account = () => {
     );
   };
 
+  const passwordChangeRequest = async (oldPassword, newPassword) => {
+    try {
+      setfetchingPasswordChange(true);
+      const response = await request.post('/api/personal-info/change-password', {
+        password: oldPassword,
+        newPassword: newPassword,
+      });
+      if (response?.status === 200 && response?.data) {
+        setfetchingPasswordChange(false);
+        if (response?.data?.success) {
+          closePasswordChangeModal();
+          return Alert.alert(
+            Messages.success,
+            Messages.successfullyChanged,
+            [{ text: Messages.okay, onPress: () => {} }],
+            {
+              cancelable: false,
+            },
+          );
+        } else if (response?.data?.message?.length) {
+          return Alert.alert(
+            Messages.generalErrorTitle,
+            response?.data?.message,
+            [
+              {
+                text: Messages.okay,
+                onPress: () => {},
+              },
+            ],
+            {
+              cancelable: false,
+            },
+          );
+        }
+        return generalErrorMessage();
+      }
+    } catch (error) {
+      setfetchingPasswordChange(false);
+      generalErrorMessage();
+    }
+  };
+
   const resetEditData = () => {
     setpassword('');
     setnameSurname(initialState?.firstname + ' ' + initialState?.surname);
     setemail(initialState?.email);
     setProfilePhoto(initialState?.profilePhoto);
     seteditable(false);
+  };
+
+  const closePasswordChangeModal = () => {
+    setShowPasswordChangeModal(false);
+  };
+
+  const passwordChangeModal = () => {
+    if (showPasswordChangeModal) {
+      return (
+        <PasswordChangeModal
+          close={closePasswordChangeModal}
+          loading={fetchingPasswordChange}
+          passwordChange={(oldPassword, newPassword) => passwordChangeRequest(oldPassword, newPassword)}
+        />
+      );
+    }
   };
 
   if (fetchingScreen) {
@@ -318,12 +379,22 @@ const Account = () => {
 
   return (
     <Layout>
+      {passwordChangeModal()}
       <View style={styles.header}>
         <View style={styles.icons}>
           {editable ? (
-            <TouchableOpacity onPress={editableClose} disabled={fetchingUpdate}>
-              <CloseIcon width={24} height={24} color={'white'} />
-            </TouchableOpacity>
+            <View>
+              <TouchableOpacity onPress={editableClose} disabled={fetchingUpdate}>
+                <CloseIcon width={24} height={24} color={'white'} />
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                onPress={() => setShowPasswordChangeModal(true)}
+                disabled={fetchingUpdate}
+                style={styles.passwordChangeKey}>
+                <KeyIcon width={24} height={24} color={'white'} />
+              </TouchableOpacity>
+            </View>
           ) : (
             <TouchableOpacity onPress={() => seteditable(true)} disabled={fetchingUpdate}>
               <EditIcon width={24} height={24} color={'white'} />
