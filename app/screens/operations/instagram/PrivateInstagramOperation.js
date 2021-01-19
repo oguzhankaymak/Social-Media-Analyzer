@@ -6,7 +6,7 @@ import { InstagramOperationMock } from '../../../mock';
 import { CommentIcon, HeartIcon, InfoIcon } from '../../../components/icons';
 import InstagramOperationModal from '../../../components/instagramOperationModal/InstagramOperationModal';
 
-const InstagramOperation = ({ navigation }) => {
+const PrivateInstagramOperation = ({ navigation }) => {
   const [operationModalName, setoperationModalName] = useState('');
   const [count, setcount] = useState(0);
 
@@ -116,4 +116,4 @@ const InstagramOperation = ({ navigation }) => {
   );
 };
 
-export default InstagramOperation;
+export default PrivateInstagramOperation;
