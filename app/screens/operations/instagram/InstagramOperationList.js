@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, Alert } from 'react-native';
 
 import styles from './styles/InstagramOperationListStyle';
 import Layout from '../../../components/layout/Layout';
@@ -7,10 +7,14 @@ import VerticalLinearCard from '../../../components/verticalLinearCard/VerticalL
 import { KeyIcon, CreditCardIcon, InfoIcon } from '../../../components/icons';
 import { Colors } from '../../../theme';
 import InstagramOperationFormModal from '../../../components/instagramOperationFormModal/InstagramOperationFormModal';
+import { request } from '../../../utils/Request';
+import Messages from '../../../utils/Messages';
+import { generalErrorMessage } from '../../../utils/Functions';
 
 const InstagramOperationList = ({ navigation }) => {
   const [formModalVisible, setformModalVisible] = useState(false);
   const [form, setform] = useState('');
+  const [privateAccountLoading, setprivateAccountLoading] = useState(false);
 
   const onpressPublicCard = () => {
     setform('public');
@@ -22,18 +26,59 @@ const InstagramOperationList = ({ navigation }) => {
     setformModalVisible(true);
   };
 
+  const privateAccountNext = async (username, password) => {
+    if (username && password) {
+      try {
+        setprivateAccountLoading(true);
+        const response = await request.post('/api/instagram/user-info', { username: username, password: password });
+        if (response.status === 200 && response?.data) {
+          setprivateAccountLoading(false);
+          if (response?.data?.success) {
+            setformModalVisible(false);
+            return navigation.navigate('privateInstagramOperation', {
+              userInfo: response?.data?.data,
+            });
+          } else if (response?.data?.message?.length) {
+            return Alert.alert(
+              Messages.generalErrorTitle,
+              response?.data?.message,
+              [
+                {
+                  text: Messages.okay,
+                  onPress: () => {},
+                },
+              ],
+              {
+                cancelable: false,
+              },
+            );
+          }
+          return generalErrorMessage();
+        }
+        setprivateAccountLoading(false);
+        return generalErrorMessage();
+      } catch (error) {
+        setprivateAccountLoading(false);
+        return generalErrorMessage();
+      }
+    }
+  };
+
   const next = () => {
     setformModalVisible(false);
-    if (form === 'public') {
-      return navigation.navigate('publicInstagramOperation');
-    }
-    return navigation.navigate('privateInstagramOperation');
+    navigation.navigate('publicInstagramOperation');
   };
 
   return (
     <Layout>
       {formModalVisible && (
-        <InstagramOperationFormModal activeForm={form} close={() => setformModalVisible(false)} onPressNext={next} />
+        <InstagramOperationFormModal
+          activeForm={form}
+          close={() => setformModalVisible(false)}
+          onPressNext={next}
+          privateLoading={privateAccountLoading}
+          onPressPrivateNext={(username, password) => privateAccountNext(username, password)}
+        />
       )}
 
       <View style={styles.container}>
