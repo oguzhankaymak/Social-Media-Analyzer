@@ -24,7 +24,10 @@ const InstagramOperationList = ({ navigation }) => {
 
   const next = () => {
     setformModalVisible(false);
-    navigation.navigate('instagramOperation');
+    if (form === 'public') {
+      return navigation.navigate('publicInstagramOperation');
+    }
+    return navigation.navigate('privateInstagramOperation');
   };
 
   return (

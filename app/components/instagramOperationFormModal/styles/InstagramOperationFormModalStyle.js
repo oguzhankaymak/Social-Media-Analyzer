@@ -44,7 +44,8 @@ export default StyleSheet.create({
   },
 
   modalView: {
-    height: 350,
+    minHeight: 200,
+    paddingBottom: 30,
     width: wp('85%'),
     borderRadius: 20,
   },
