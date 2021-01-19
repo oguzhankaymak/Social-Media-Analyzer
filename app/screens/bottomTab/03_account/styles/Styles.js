@@ -14,7 +14,7 @@ export default StyleSheet.create({
   },
 
   profile: {
-    marginTop: 30,
+    marginTop: 10,
     alignItems: 'center',
   },
 
@@ -83,5 +83,10 @@ export default StyleSheet.create({
     flex: 0.2,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+
+  passwordChangeKey: {
+    marginTop: 15,
+    width: 30,
   },
 });

@@ -28,4 +28,5 @@ export default {
   invalidDescription: 'Lütfen açıklamanızı girin veya detaylandırın.',
   successfullyContactTitle: 'Bizimle İletişime Geçtiğiniz İçin Teşekkür Ederiz!',
   successfullyContactDescription: 'En kısa zamanda dönüş yapılacaktır.',
+  invalidLengthPassword: 'Şifreniz en az 4 karakterden oluşabilir.',
 };
