@@ -6,12 +6,18 @@ import UserList from '../../../components/userList/UserList';
 import { CalendarIcon, SearchIcon } from '../../../components/icons';
 import { Colors } from '../../../theme';
 
-const Followers = () => {
+const Followers = ({ route }) => {
   const [username, setusername] = useState('');
-  const [data, setdata] = useState([]);
+  const [data, setdata] = useState(route?.params?.followers);
+  const [filterData, setFilterData] = useState(route?.params?.followers);
 
-  const onchangeUsername = (text) => {
-    setusername(text.trim());
+  const searchFilter = (text) => {
+    let newData = data.filter((item) => {
+      let listItem = `${item.username?.toLowerCase()} ${item.full_name?.toLowerCase()}`;
+      return listItem.indexOf(text?.toLowerCase()) > -1;
+    });
+    setusername(text);
+    setFilterData(newData?.length ? newData : null);
   };
 
   return (
@@ -25,17 +31,21 @@ const Followers = () => {
           <TextInput
             style={styles.textInput}
             value={username}
-            onChangeText={onchangeUsername}
-            placeholder={'Kullanıcı Adı'}
+            onChangeText={searchFilter}
+            placeholder={'Kullanıcı Adı / Ad Soyad'}
             maxLength={10}
             keyboardType={'default'}
-            returnKeyType={'search'}
-            onSubmitEditing={() => console.log(username)}
           />
         </View>
       </View>
       <View style={styles.listView}>
-        <UserList data={data} />
+        {filterData && filterData?.length ? (
+          <View>
+            <UserList data={filterData} />
+          </View>
+        ) : (
+          <Text>Kullanıcı Bulunamadı!</Text>
+        )}
       </View>
     </View>
   );

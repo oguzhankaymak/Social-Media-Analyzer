@@ -37,6 +37,8 @@ const InstagramOperationList = ({ navigation }) => {
             setformModalVisible(false);
             return navigation.navigate('privateInstagramOperation', {
               userInfo: response?.data?.data,
+              username: username,
+              password: password,
             });
           } else if (response?.data?.message?.length) {
             return Alert.alert(
