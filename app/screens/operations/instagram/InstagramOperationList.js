@@ -32,12 +32,10 @@ const InstagramOperationList = ({ navigation }) => {
 
   return (
     <Layout>
-      <InstagramOperationFormModal
-        modalVisible={formModalVisible}
-        activeForm={form}
-        close={() => setformModalVisible(false)}
-        onPressNext={next}
-      />
+      {formModalVisible && (
+        <InstagramOperationFormModal activeForm={form} close={() => setformModalVisible(false)} onPressNext={next} />
+      )}
+
       <View style={styles.container}>
         <VerticalLinearCard
           headerTitle={'Açık Hesap İşlemleri'}

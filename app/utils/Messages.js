@@ -29,4 +29,8 @@ export default {
   successfullyContactTitle: 'Bizimle İletişime Geçtiğiniz İçin Teşekkür Ederiz!',
   successfullyContactDescription: 'En kısa zamanda dönüş yapılacaktır.',
   invalidLengthPassword: 'Şifreniz en az 4 karakterden oluşabilir.',
+
+  //instagram
+  invalidInstagramUsername: 'Lütfen kullanıcı adınızı kontrol ediniz.',
+  invalidInstagramPassword: 'Lütfen şifrenizi kontrol ediniz.',
 };
