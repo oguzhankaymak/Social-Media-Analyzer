@@ -1,15 +1,20 @@
 import React, { useState } from 'react';
-import { ImageBackground, View, Text, Image, TouchableOpacity } from 'react-native';
+import { ImageBackground, View, Text, Image, TouchableOpacity, ActivityIndicator } from 'react-native';
 
 import styles from './styles/InstagramOperationStyle';
 import { CommentIcon, DoubleRightIcon, HeartIcon, InfoIcon } from '../../../components/icons';
 import InstagramOperationModal from '../../../components/instagramOperationModal/InstagramOperationModal';
 import { Colors } from '../../../theme';
+import { request } from '../../../utils/Request';
+import { generalErrorMessage } from '../../../utils/Functions';
 
 const PrivateInstagramOperation = ({ route, navigation }) => {
   const [userInfo, setUserInfo] = useState(route?.params?.userInfo);
+  const [params, setparams] = useState({ username: route?.params?.username, password: route?.params?.password });
   const [operationModalName, setoperationModalName] = useState('');
   const [count, setcount] = useState(0);
+  const [followers, setfollowers] = useState(null);
+  const [followersLoading, setfollowersLoading] = useState(false);
 
   const onPressPosts = () => {
     setcount(userInfo?.userInfo?.media_count);
@@ -26,6 +31,30 @@ const PrivateInstagramOperation = ({ route, navigation }) => {
     setoperationModalName('comments');
   };
 
+  const getFollowers = async () => {
+    if (followers) {
+      return navigation.navigate('followers', { followers: followers });
+    }
+    try {
+      setfollowersLoading(true);
+      const response = await request.post('/api/instagram/followings', params);
+      console.log(response);
+      if (response?.status === 200 && response?.data) {
+        setfollowersLoading(false);
+        if (response?.data?.success) {
+          setfollowers(response?.data?.data[0]);
+          return navigation.navigate('followers', { followers: response?.data?.data[0] });
+        }
+        return generalErrorMessage();
+      }
+      setfollowersLoading(false);
+      return generalErrorMessage();
+    } catch (error) {
+      setfollowersLoading(false);
+      return generalErrorMessage();
+    }
+  };
+
   const _renderAccountInfo = () => (
     <View style={styles.accountInfoCard}>
       {<Info title={'Gönderi'} value={userInfo?.userInfo?.media_count} onPress={onPressPosts} />}
@@ -33,7 +62,8 @@ const PrivateInstagramOperation = ({ route, navigation }) => {
         <Info
           title={'Takipçi'}
           value={userInfo?.userInfo?.follower_count}
-          onPress={() => navigation.navigate('followers')}
+          loading={followersLoading}
+          onPress={() => getFollowers()}
         />
       }
       {
@@ -47,9 +77,11 @@ const PrivateInstagramOperation = ({ route, navigation }) => {
     </View>
   );
 
-  const Info = ({ title, value, onPress }) => (
-    <TouchableOpacity style={styles.accountInfoDetailCard} onPress={onPress}>
-      {value === null ? (
+  const Info = ({ title, value, onPress, loading }) => (
+    <TouchableOpacity style={styles.accountInfoDetailCard} onPress={onPress} disabled={followersLoading}>
+      {loading ? (
+        <ActivityIndicator size={'small'} color={Colors.black} />
+      ) : value === null ? (
         <DoubleRightIcon width={22} height={22} color={Colors.black} />
       ) : (
         <Text style={styles.counterText}>{value}</Text>
