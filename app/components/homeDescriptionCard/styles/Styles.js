@@ -10,6 +10,7 @@ export default StyleSheet.create({
     paddingRight: wp('18%'),
     paddingLeft: wp('2%'),
     paddingVertical: hp('2%'),
+    backgroundColor: Colors.brightCyan,
   },
 
   titleView: {

@@ -2,17 +2,51 @@ import React from 'react';
 import { Text, View } from 'react-native';
 
 import styles from './styles/Styles';
-import { Colors } from '../../theme';
-import { ChartSquareBarIcon } from '../icons';
-const HomeDescriptionCard = ({ title, description, cardName }) => {
-  const backgroundColor = () => {
-    if (cardName === 'statistics') {
-      return Colors.brightCyan;
-    }
-  };
+import { ChartSquareBarIcon, BoardListIcon, InfoIcon, KeyIcon, UserIcon, PieChartIcon } from '../icons';
 
+const HomeDescriptionCard = ({ title, description, cardName }) => {
   const _renderIcon = () => {
-    if (cardName === 'statistics') {
+    if (cardName === 'hint-stats') {
+      return (
+        <PieChartIcon
+          width={styles.chartSquareBarIcon.width}
+          height={styles.chartSquareBarIcon.height}
+          color={styles.chartSquareBarIcon.color}
+        />
+      );
+    } else if (cardName === 'hint-suggestions') {
+      return (
+        <BoardListIcon
+          width={styles.chartSquareBarIcon.width}
+          height={styles.chartSquareBarIcon.height}
+          color={styles.chartSquareBarIcon.color}
+        />
+      );
+    } else if (cardName === 'hint-public-accounts') {
+      return (
+        <InfoIcon
+          width={styles.chartSquareBarIcon.width}
+          height={styles.chartSquareBarIcon.height}
+          color={styles.chartSquareBarIcon.color}
+        />
+      );
+    } else if (cardName === 'hint-private-accounts') {
+      return (
+        <KeyIcon
+          width={styles.chartSquareBarIcon.width}
+          height={styles.chartSquareBarIcon.height}
+          color={styles.chartSquareBarIcon.color}
+        />
+      );
+    } else if (cardName === 'hint-my-account') {
+      return (
+        <UserIcon
+          width={styles.chartSquareBarIcon.width}
+          height={styles.chartSquareBarIcon.height}
+          color={styles.chartSquareBarIcon.color}
+        />
+      );
+    } else if (cardName === 'hint-analysis') {
       return (
         <ChartSquareBarIcon
           width={styles.chartSquareBarIcon.width}
@@ -21,9 +55,16 @@ const HomeDescriptionCard = ({ title, description, cardName }) => {
         />
       );
     }
+    return (
+      <InfoIcon
+        width={styles.chartSquareBarIcon.width}
+        height={styles.chartSquareBarIcon.height}
+        color={styles.chartSquareBarIcon.color}
+      />
+    );
   };
   return (
-    <View style={[styles.card, { backgroundColor: backgroundColor() }]}>
+    <View style={styles.card}>
       <View style={styles.container}>
         <View style={styles.round}>{_renderIcon()}</View>
         <View>
