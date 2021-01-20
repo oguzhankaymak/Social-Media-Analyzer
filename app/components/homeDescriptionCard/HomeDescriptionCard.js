@@ -2,7 +2,7 @@ import React from 'react';
 import { Text, View } from 'react-native';
 
 import styles from './styles/Styles';
-import { ChartSquareBarIcon, BoardListIcon, InfoIcon, KeyIcon, UserIcon, PieChartIcon } from '../icons';
+import { ChartSquareBarIcon, BoardListIcon, InfoIcon, UserIcon, PieChartIcon, UnlockIcon, LockIcon } from '../icons';
 
 const HomeDescriptionCard = ({ title, description, cardName }) => {
   const _renderIcon = () => {
@@ -24,7 +24,7 @@ const HomeDescriptionCard = ({ title, description, cardName }) => {
       );
     } else if (cardName === 'hint-public-accounts') {
       return (
-        <InfoIcon
+        <UnlockIcon
           width={styles.chartSquareBarIcon.width}
           height={styles.chartSquareBarIcon.height}
           color={styles.chartSquareBarIcon.color}
@@ -32,7 +32,7 @@ const HomeDescriptionCard = ({ title, description, cardName }) => {
       );
     } else if (cardName === 'hint-private-accounts') {
       return (
-        <KeyIcon
+        <LockIcon
           width={styles.chartSquareBarIcon.width}
           height={styles.chartSquareBarIcon.height}
           color={styles.chartSquareBarIcon.color}

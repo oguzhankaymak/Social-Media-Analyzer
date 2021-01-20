@@ -58,7 +58,7 @@ const Home = ({ navigation }) => {
               />
             </View>
             <View style={styles.card}>
-              <RoundCard name={'advice'} title={'Öneriler'} />
+              <RoundCard name={'advice'} title={'Öneriler'} onPressCard={() => navigation.navigate('advice')} />
             </View>
             <View style={styles.card}>
               <RoundCard name={'charts'} title={'Grafiklerim'} onPressCard={() => navigation.navigate('chartsStack')} />
