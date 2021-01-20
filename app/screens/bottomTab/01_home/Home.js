@@ -1,21 +1,49 @@
-import React from 'react';
-import { View, Text, Image, ScrollView } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, Image, ScrollView, ActivityIndicator } from 'react-native';
 
 import Layout from '../../../components/layout/Layout';
 import RoundCard from '../../../components/roundCard/RoundCard';
 import HomeDescriptionCard from '../../../components/homeDescriptionCard/HomeDescriptionCard';
 import styles from './styles/Styles';
 import { useSelector } from 'react-redux';
+import { request } from '../../../utils/Request';
+import { generalErrorMessage } from '../../../utils/Functions';
 
 const Home = ({ navigation }) => {
-  const user = useSelector((state) => state.userItem.user);
+  const userItem = useSelector((state) => state.userItem);
+
+  const [randomHint, setRandomHint] = useState(null);
+  const [fetchingRandomHint, setfetchingRandomHint] = useState(false);
+
+  useEffect(() => {
+    getRandomHint();
+  }, []);
+
+  const getRandomHint = async () => {
+    if (userItem?.token) {
+      try {
+        setfetchingRandomHint(true);
+        const response = await request.get('/get-random-hint');
+        if (response.status === 200 && response?.data) {
+          setfetchingRandomHint(false);
+          if (response?.data?.success) {
+            return setRandomHint(response?.data?.results);
+          }
+          return generalErrorMessage();
+        }
+      } catch (error) {
+        setfetchingRandomHint(false);
+        return generalErrorMessage();
+      }
+    }
+  };
 
   return (
     <Layout>
       <View style={styles.header}>
         <View>
           <Text style={styles.welcomeText}>Hoşgeldin,</Text>
-          <Text style={styles.nameText}>{user?.firstname}!</Text>
+          <Text style={styles.nameText}>{userItem?.user?.firstname}!</Text>
         </View>
         <Image style={styles.socialAnnouncementGif} source={require('../../../assets/gifs/socialAnnouncement.webp')} />
       </View>
@@ -43,13 +71,17 @@ const Home = ({ navigation }) => {
       </View>
       <View style={styles.footer}>
         <ScrollView>
-          <HomeDescriptionCard
-            title={'İstatistiklerinizi görüntüleyebilirsiniz'}
-            description={
-              'İstatistiklerinizi takip edebilir ve detaylı olarak garfikler aracılığıyla inceleyebilirsiniz. Üst menüde grafikler butonuna basıp sayfaya ulaşabilirsiniz.'
-            }
-            cardName={'statistics'}
-          />
+          {fetchingRandomHint ? (
+            <ActivityIndicator size={'large'} color={'white'} />
+          ) : (
+            randomHint && (
+              <HomeDescriptionCard
+                title={randomHint?.title}
+                description={randomHint?.description}
+                cardName={randomHint?.cardName}
+              />
+            )
+          )}
         </ScrollView>
       </View>
     </Layout>
