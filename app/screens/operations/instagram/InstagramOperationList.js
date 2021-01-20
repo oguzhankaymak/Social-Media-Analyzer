@@ -15,6 +15,7 @@ const InstagramOperationList = ({ navigation }) => {
   const [formModalVisible, setformModalVisible] = useState(false);
   const [form, setform] = useState('');
   const [privateAccountLoading, setprivateAccountLoading] = useState(false);
+  const [publicAccountLoading, setPublicAccountLoading] = useState(false);
 
   const onpressPublicCard = () => {
     setform('public');
@@ -66,6 +67,42 @@ const InstagramOperationList = ({ navigation }) => {
     }
   };
 
+  const publicAccountNext = async (username) => {
+    if (username) {
+      try {
+        setPublicAccountLoading(true);
+        const response = await request.get(`/api/instagram/userInfoByUsername/${username}`);
+        if (response.status === 200 && response?.data) {
+          setPublicAccountLoading(false);
+          if (response?.data?.success) {
+            setformModalVisible(false);
+            return navigation.navigate('publicInstagramOperation', { userInfo: response?.data?.data });
+          } else if (response?.data?.message?.length) {
+            return Alert.alert(
+              Messages.generalErrorTitle,
+              response?.data?.message,
+              [
+                {
+                  text: Messages.okay,
+                  onPress: () => {},
+                },
+              ],
+              {
+                cancelable: false,
+              },
+            );
+          }
+          return generalErrorMessage();
+        }
+        setPublicAccountLoading(false);
+        return generalErrorMessage();
+      } catch (error) {
+        setPublicAccountLoading(false);
+        return generalErrorMessage();
+      }
+    }
+  };
+
   const next = () => {
     setformModalVisible(false);
     navigation.navigate('publicInstagramOperation');
@@ -79,6 +116,7 @@ const InstagramOperationList = ({ navigation }) => {
           close={() => setformModalVisible(false)}
           onPressNext={next}
           privateLoading={privateAccountLoading}
+          onPressPublicNext={(username, password) => publicAccountNext(username)}
           onPressPrivateNext={(username, password) => privateAccountNext(username, password)}
         />
       )}

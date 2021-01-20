@@ -21,12 +21,23 @@ const InstagramOperationModal = ({ modalVisible, close, modalName, count }) => {
   };
 
   const _renderContent = () => {
-    if (modalName === 'posts')
+    if (modalName === 'posts') {
       return `Toplam gönderi sayısınız ${count}. Unutmayınız ki takipçileriniz sizi paylatığın gönderilerden ve hikayelerden hatırlayacaktır. Dolayısıyla paylaşım yapmaya lütfen özen gösterin.`;
-    if (modalName === 'likes')
-      return `Toplam beğeni sayısınız ${count}. Belirtilen beğeni sayısınız son 30 gönderinizi kapsamaktadır. Bunun sebebi önceki paylaşımlardan ziyade yeni paylaşımlarınızın önemini vurgulamak istiyoruz. Beğeni sayınızın her geçen gün artması dileğiyle!`;
-    if (modalName === 'comments')
-      return `Toplam yorum sayısınız ${count}. Belirtilen beğeni sayısınız son 30 gönderinizi kapsamaktadır. Son gönderilerinizdeki yorum sayısı etkileşimi daha fazla artıracaktır. Yakın çevrenizden daha fazla etkileşim için destek alabilirsiniz.`;
+    }
+
+    if (modalName === 'likes') {
+      if (count) {
+        return `Toplam beğeni sayısınız ${count}. Belirtilen beğeni sayısınız son 30 gönderinizi kapsamaktadır. Bunun sebebi önceki paylaşımlardan ziyade yeni paylaşımlarınızın önemini vurgulamak istiyoruz. Beğeni sayınızın her geçen gün artması dileğiyle!`;
+      }
+      return 'Beğeni sayılarınız sizin tanınabilirliğinizi ve etkişiminizi artırabilir. Beğeni sayınızın her geçen gün artması dileğiyle!';
+    }
+
+    if (modalName === 'comments') {
+      if (count) {
+        return `Toplam yorum sayısınız ${count}. Belirtilen beğeni sayısınız son 30 gönderinizi kapsamaktadır. Son gönderilerinizdeki yorum sayısı etkileşimi daha fazla artıracaktır. Yakın çevrenizden daha fazla etkileşim için destek alabilirsiniz.`;
+      }
+      return 'Son gönderilerinizdeki yorum sayısı etkileşimi daha fazla artıracaktır. Yakın çevrenizden daha fazla etkileşim için destek alabilirsiniz.';
+    }
   };
 
   return (
