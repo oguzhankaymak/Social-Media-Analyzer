@@ -17,7 +17,14 @@ import { Colors, Fonts } from '../../theme';
 import { CloseIcon, DoubleRightIcon } from '../icons';
 import Messages from '../../utils/Messages';
 
-const InstagramOperationFormModal = ({ activeForm, close, privateLoading, onPressPrivateNext, onPressPublicNext }) => {
+const InstagramOperationFormModal = ({
+  activeForm,
+  close,
+  privateLoading,
+  onPressPrivateNext,
+  publicLoading,
+  onPressPublicNext,
+}) => {
   const passwordElement = useRef(null);
   const [publicUsername, setpublicUsername] = useState('');
   const [privateUserName, setprivateUserName] = useState('');
@@ -57,7 +64,7 @@ const InstagramOperationFormModal = ({ activeForm, close, privateLoading, onPres
       ? Alert.alert(Messages.pleaseAttention, errorMessage, [{ text: Messages.okay, onPress: () => {} }], {
           cancelable: false,
         })
-      : onPressPublicNext(privateUserName, privatePassword);
+      : onPressPublicNext(publicUsername);
   };
 
   const onChangePrivateUsername = (text) => {
@@ -88,17 +95,22 @@ const InstagramOperationFormModal = ({ activeForm, close, privateLoading, onPres
               style={styles.textInput}
               onChangeText={onChangePublicUsername}
               placeholder={'Kullanıcı Adı'}
+              editable={!publicLoading}
               maxLength={30}
             />
           </View>
-          <TouchableOpacity style={styles.button} onPress={onPressPublic}>
+          <TouchableOpacity style={styles.button} onPress={onPressPublic} disabled={publicLoading}>
             <Text style={styles.buttonText}>İlerle</Text>
             <View style={styles.doubleRightIconView}>
-              <DoubleRightIcon
-                stroke={Colors.veryDarkMostlyBlackRed}
-                width={styles.doubleRightIcon.width}
-                height={styles.doubleRightIcon.height}
-              />
+              {publicLoading ? (
+                <ActivityIndicator size={'small'} color={Colors.black} />
+              ) : (
+                <DoubleRightIcon
+                  stroke={Colors.veryDarkMostlyBlackRed}
+                  width={styles.doubleRightIcon.width}
+                  height={styles.doubleRightIcon.height}
+                />
+              )}
             </View>
           </TouchableOpacity>
         </View>
@@ -153,7 +165,7 @@ const InstagramOperationFormModal = ({ activeForm, close, privateLoading, onPres
         <View style={styles.centeredView}>
           <LinearGradient colors={backgroundColor()} style={styles.modalView}>
             <View style={styles.header}>
-              <TouchableOpacity style={styles.closeButton} onPress={close} disabled={privateLoading}>
+              <TouchableOpacity style={styles.closeButton} onPress={close} disabled={privateLoading || publicLoading}>
                 <CloseIcon width={styles.closeIcon.width} height={styles.closeIcon.height} color={Colors.white} />
               </TouchableOpacity>
             </View>
