@@ -17,6 +17,8 @@ const PrivateInstagramOperation = ({ route, navigation }) => {
   const [followersLoading, setfollowersLoading] = useState(false);
   const [followings, setfollowings] = useState(null);
   const [followingsLoading, setfollowingsLoading] = useState(false);
+  const [notFollowedUsers, setnotFollowedUsers] = useState(null);
+  const [notFollowedLoading, setNotFollowedLoading] = useState(false);
 
   const onPressPosts = () => {
     setcount(userInfo?.userInfo?.media_count);
@@ -79,6 +81,29 @@ const PrivateInstagramOperation = ({ route, navigation }) => {
     }
   };
 
+  const getNotFollowedUser = async () => {
+    if (notFollowedUsers) {
+      return navigation.navigate('notToBeFollowed', { notToBeFollowedUsers: notFollowedUsers });
+    }
+    try {
+      setNotFollowedLoading(true);
+      const response = await request.post('/api/instagram/not-followed-users', params);
+      if (response?.status === 200 && response?.data) {
+        setNotFollowedLoading(false);
+        if (response?.data?.success) {
+          setnotFollowedUsers(response?.data?.data);
+          return navigation.navigate('notToBeFollowed', { notToBeFollowedUsers: response?.data?.data });
+        }
+        return generalErrorMessage();
+      }
+      setNotFollowedLoading(false);
+      return generalErrorMessage();
+    } catch (error) {
+      setNotFollowedLoading(false);
+      return generalErrorMessage();
+    }
+  };
+
   const _renderAccountInfo = () => (
     <View style={styles.accountInfoCard}>
       {<Info title={'Gönderi'} value={userInfo?.userInfo?.media_count} onPress={onPressPosts} />}
@@ -87,7 +112,7 @@ const PrivateInstagramOperation = ({ route, navigation }) => {
           title={'Takipçi'}
           value={userInfo?.userInfo?.follower_count}
           loading={followersLoading}
-          onPress={() => getFollowers()}
+          onPress={getFollowers}
         />
       }
       {
@@ -95,10 +120,10 @@ const PrivateInstagramOperation = ({ route, navigation }) => {
           title={'Takip Edilen'}
           value={userInfo?.userInfo?.following_count}
           loading={followingsLoading}
-          onPress={() => getFollowings()}
+          onPress={getFollowings}
         />
       }
-      {<Info title={'Takip Etmeyen'} value={null} onPress={() => navigation.navigate('notToBeFollowed')} />}
+      {<Info title={'Takip Etmeyen'} value={null} loading={notFollowedLoading} onPress={getNotFollowedUser} />}
     </View>
   );
 
@@ -106,7 +131,7 @@ const PrivateInstagramOperation = ({ route, navigation }) => {
     <TouchableOpacity
       style={styles.accountInfoDetailCard}
       onPress={onPress}
-      disabled={followersLoading || followingsLoading}>
+      disabled={followersLoading || followingsLoading || notFollowedLoading}>
       {loading ? (
         <ActivityIndicator size={'small'} color={Colors.black} />
       ) : value === null ? (
@@ -130,7 +155,11 @@ const PrivateInstagramOperation = ({ route, navigation }) => {
 
   const _renderBody = () => (
     <View style={styles.socialInfoCards}>
-      <TouchableOpacity style={styles.socialInfoLikeCard} activeOpacity={100} onPress={onPressLikes}>
+      <TouchableOpacity
+        style={styles.socialInfoLikeCard}
+        activeOpacity={100}
+        onPress={onPressLikes}
+        disabled={followersLoading || followingsLoading || notFollowedLoading}>
         <Text style={styles.socialInfoText}>{userInfo?.totalLikeCount}</Text>
         <View style={styles.socialInfoIconCard}>
           <View style={styles.socialInfoIconView}>
@@ -138,7 +167,11 @@ const PrivateInstagramOperation = ({ route, navigation }) => {
           </View>
         </View>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.socialInfoCommentCard} activeOpacity={100} onPress={onPressComments}>
+      <TouchableOpacity
+        style={styles.socialInfoCommentCard}
+        activeOpacity={100}
+        onPress={onPressComments}
+        disabled={followersLoading || followingsLoading || notFollowedLoading}>
         <Text style={styles.socialInfoText}>{userInfo?.totalCommentCount}</Text>
         <View style={styles.socialInfoIconCard}>
           <View style={styles.socialInfoIconView}>
