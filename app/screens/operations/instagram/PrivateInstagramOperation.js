@@ -15,6 +15,8 @@ const PrivateInstagramOperation = ({ route, navigation }) => {
   const [count, setcount] = useState(0);
   const [followers, setfollowers] = useState(null);
   const [followersLoading, setfollowersLoading] = useState(false);
+  const [followings, setfollowings] = useState(null);
+  const [followingsLoading, setfollowingsLoading] = useState(false);
 
   const onPressPosts = () => {
     setcount(userInfo?.userInfo?.media_count);
@@ -37,8 +39,7 @@ const PrivateInstagramOperation = ({ route, navigation }) => {
     }
     try {
       setfollowersLoading(true);
-      const response = await request.post('/api/instagram/followings', params);
-      console.log(response);
+      const response = await request.post('/api/instagram/followers', params);
       if (response?.status === 200 && response?.data) {
         setfollowersLoading(false);
         if (response?.data?.success) {
@@ -51,6 +52,29 @@ const PrivateInstagramOperation = ({ route, navigation }) => {
       return generalErrorMessage();
     } catch (error) {
       setfollowersLoading(false);
+      return generalErrorMessage();
+    }
+  };
+
+  const getFollowings = async () => {
+    if (followings) {
+      return navigation.navigate('following', { followings: followings });
+    }
+    try {
+      setfollowingsLoading(true);
+      const response = await request.post('/api/instagram/followings', params);
+      if (response?.status === 200 && response?.data) {
+        setfollowingsLoading(false);
+        if (response?.data?.success) {
+          setfollowings(response?.data?.data[0]);
+          return navigation.navigate('following', { followings: response?.data?.data[0] });
+        }
+        return generalErrorMessage();
+      }
+      setfollowingsLoading(false);
+      return generalErrorMessage();
+    } catch (error) {
+      setfollowingsLoading(false);
       return generalErrorMessage();
     }
   };
@@ -70,7 +94,8 @@ const PrivateInstagramOperation = ({ route, navigation }) => {
         <Info
           title={'Takip Edilen'}
           value={userInfo?.userInfo?.following_count}
-          onPress={() => navigation.navigate('following')}
+          loading={followingsLoading}
+          onPress={() => getFollowings()}
         />
       }
       {<Info title={'Takip Etmeyen'} value={null} onPress={() => navigation.navigate('notToBeFollowed')} />}
@@ -78,7 +103,10 @@ const PrivateInstagramOperation = ({ route, navigation }) => {
   );
 
   const Info = ({ title, value, onPress, loading }) => (
-    <TouchableOpacity style={styles.accountInfoDetailCard} onPress={onPress} disabled={followersLoading}>
+    <TouchableOpacity
+      style={styles.accountInfoDetailCard}
+      onPress={onPress}
+      disabled={followersLoading || followingsLoading}>
       {loading ? (
         <ActivityIndicator size={'small'} color={Colors.black} />
       ) : value === null ? (
