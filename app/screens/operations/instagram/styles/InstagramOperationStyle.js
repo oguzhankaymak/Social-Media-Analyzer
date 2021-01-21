@@ -23,9 +23,9 @@ export default StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: Colors.mediumVerySoftBlue,
-    width: 100,
-    height: 100,
-    borderRadius: 100 / 2,
+    width: 90,
+    height: 90,
+    borderRadius: 90 / 2,
     marginBottom: hp('3%'),
     shadowColor: '#000',
     shadowOffset: {
@@ -39,9 +39,9 @@ export default StyleSheet.create({
   },
 
   image: {
-    width: 80,
-    height: 80,
-    borderRadius: 80 / 2,
+    width: 90,
+    height: 90,
+    borderRadius: 90 / 2,
   },
 
   nameSurnameText: {

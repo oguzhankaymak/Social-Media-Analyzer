@@ -45,7 +45,14 @@ const Home = ({ navigation }) => {
           <Text style={styles.welcomeText}>Hoşgeldin,</Text>
           <Text style={styles.nameText}>{userItem?.user?.firstname}!</Text>
         </View>
-        <Image style={styles.socialAnnouncementGif} source={require('../../../assets/gifs/socialAnnouncement.webp')} />
+        <View style={styles.gif}>
+          <Image
+            style={styles.socialAnnouncementGif}
+            source={require('../../../assets/gifs/socialAnnouncement.webp')}
+          />
+          <Text style={styles.gifText}>Abdul Latif @LottieFiles</Text>
+          {/* created by Abdul Latif @LottieFiles : https://lottiefiles.com/30901-social-media-marketing-announcement*/}
+        </View>
       </View>
       <View style={styles.container}>
         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>

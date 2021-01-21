@@ -51,7 +51,7 @@ export default StyleSheet.create({
 
   footer: {
     flex: 0.05,
-    alignItems: 'flex-start',
+    alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',
   },
