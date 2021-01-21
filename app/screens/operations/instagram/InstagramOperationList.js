@@ -116,6 +116,7 @@ const InstagramOperationList = ({ navigation }) => {
           close={() => setformModalVisible(false)}
           onPressNext={next}
           privateLoading={privateAccountLoading}
+          publicLoading={publicAccountLoading}
           onPressPublicNext={(username, password) => publicAccountNext(username)}
           onPressPrivateNext={(username, password) => privateAccountNext(username, password)}
         />

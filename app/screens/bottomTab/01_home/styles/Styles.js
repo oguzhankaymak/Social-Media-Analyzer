@@ -44,4 +44,14 @@ export default StyleSheet.create({
     fontFamily: Fonts.type.PoppinsBold,
     fontSize: Fonts.size.h61,
   },
+
+  gif: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  gifText: {
+    color: Colors.white,
+    fontSize: Fonts.size.h12,
+  },
 });
