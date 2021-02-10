@@ -8,47 +8,59 @@
 </p>
 
 <!-- Contents -->
+
 ## Contents
 
-* [About Project](#about-project)
-  * [Purpose Of Project](#purpose-of-project)
-* [Installation](#installation)
+- [About Project](#about-project)
+  - [Purpose Of Project](#purpose-of-project)
+- [Installation](#installation)
 
 ## About Project
+
 This application was created for Mobile Application Development lecture's term project.
 
-| Technologies | Version
-| --- | ---
-| React | 
-| React Native | 
-| Axios | 
-| React Navigation Packages | Latest
+| Technologies              | Version |
+| ------------------------- | ------- |
+| React                     |
+| React Native              |
+| Axios                     |
+| React Navigation Packages | Latest  |
 
 ### Purpose Of Project
-* In this project, if user wants to analyze an Instagram account it should be register and then login.
-* After successfully login, there is two available options for users who will use this application.
-* Firstly, users can type their own credentials for their private accounts and after then analyze and display their accounts general info or they can display the followings who not followed them.
-* Secondly, users can analyze the account they want, if the account public by just typing account's username.
+
+- In this project, if user wants to analyze an Instagram account it should be register and then login.
+- After successfully login, there is two available options for users who will use this application.
+- Firstly, users can type their own credentials for their private accounts and after then analyze and display their accounts general info or they can display the followings who not followed them.
+- Secondly, users can analyze the account they want, if the account public by just typing account's username.
 
 ## Installation
+
 1. Clone the repository.
+
 ```sh
 git clone https://github.com/oguzhankaymak/Social-Media-Analyzer.git
 ```
+
 2. Install expo.
+
 ```sh
 npm install --global expo-cli
 ```
+
 3. Install necessary packages via yarn.
+
 ```sh
 yarn install
 ```
+
 3. Run the app.
+
 ```sh
 expo start
 ```
 
 <!-- MARKDOWN LINKS & IMAGES -->
+
 [build-shield]: https://img.shields.io/badge/build-passing-brightgreen.svg?style=flat-square
 [contributors-shield]: https://img.shields.io/badge/contributors-2-orange.svg?style=flat-square
 [license-shield]: https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square
@@ -56,4 +68,5 @@ expo start
 
 ## Screenshots
 
+![readme](https://user-images.githubusercontent.com/36153454/107495981-cf7e4e00-6ba1-11eb-97a5-71c0f870944a.jpg)
 
