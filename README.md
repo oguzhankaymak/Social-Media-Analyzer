@@ -45,6 +45,9 @@ This application was created for Mobile Application Development lecture's term p
 
 ## Installation
 
+You must run backend project.
+Backend Project : https://github.com/EngincanV/Social-Media-Analyzer-Service
+
 1. Clone the repository.
 
 ```sh
@@ -63,7 +66,10 @@ npm install --global expo-cli
 yarn install
 ```
 
-3. Run the app.
+3. You must write local ip address instead of localhost in Request.js
+
+
+4. Run the app.
 
 ```sh
 expo start
