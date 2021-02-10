@@ -66,10 +66,13 @@ npm install --global expo-cli
 yarn install
 ```
 
-3. You must write local ip address instead of localhost in Request.js
+4. You must write local ip address instead of localhost in Request.js
 
+```sh
+for example : 'http://192.000.0.00:3000'
+```
 
-4. Run the app.
+5. Run the app.
 
 ```sh
 expo start
