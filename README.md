@@ -68,5 +68,5 @@ expo start
 
 ## Screenshots
 
-![readme](https://user-images.githubusercontent.com/36153454/107495981-cf7e4e00-6ba1-11eb-97a5-71c0f870944a.jpg)
+![Untitled Diagram](https://user-images.githubusercontent.com/36153454/107496801-d5286380-6ba2-11eb-8ca6-03f22fe832fe.png)
 
