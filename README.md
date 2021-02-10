@@ -14,17 +14,27 @@
 - [About Project](#about-project)
   - [Purpose Of Project](#purpose-of-project)
 - [Installation](#installation)
+- [Screenshots](#screenshots)
 
 ## About Project
 
 This application was created for Mobile Application Development lecture's term project.
 
-| Technologies              | Version |
-| ------------------------- | ------- |
-| React                     |
-| React Native              |
-| Axios                     |
-| React Navigation Packages | Latest  |
+
+
+| Some Packages / Libraries | Version |    
+| ------------------------- | ------- |       
+| React Native              |         |       
+| React                     | 16.3.1  |
+| Expo                      | 39.0.2  |
+| Eslint                    | 7.15.0  |
+| Axios                     | 0.21.1  |
+| Redux                     | 4.0.5   |
+| Redux-Thunk               | 2.3.0   |
+| Redux-Persist             | 6.0.0   |
+| Seamless-Immutable        | 7.1.4   |
+| Victory Native            | 35.3.1  |
+
 
 ### Purpose Of Project
 
