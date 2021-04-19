@@ -43,6 +43,12 @@ This application was created for Mobile Application Development lecture's term p
 - Firstly, users can type their own credentials for their private accounts and after then analyze and display their accounts general info or they can display the followings who not followed them.
 - Secondly, users can analyze the account they want, if the account public by just typing account's username.
 
+### Credits
+- contactIcon.svg / ContactIcon.js | socialGirl.svg / SocialGirl.js | calendar.png | pieMan.png | statistics.png | timeManagement.png : [Undraw](https://undraw.co)
+- socialAnnouncement.webp : [Animation by Abdul Latif on LottieFiles](https://lottiefiles.com/30901-social-media-marketing-announcement)
+- PercentageCalculator.js : [react-native-responsive-screen](https://github.com/marudy/react-native-responsive-screen)
+
+
 ## Installation
 
 You must run backend project.
